@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Users</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      color: #444;
+      margin-top: 2rem;
+    }
+
+    .user-list {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    li {
+      padding: 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .email {
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>All Registered Users</h1>
+
+  <div class="user-list">
+    <h2>Manual Users (Registered via Form)</h2>
+    <ul>
+      <% if (manualUsers.length === 0) { %>
+        <li>No manual users found.</li>
+      <% } else { %>
+        <% manualUsers.forEach(user => { %>
+          <li>
+            <strong><%= user.username %></strong>
+            <% if (user.email) { %>
+              <div class="email"><%= user.email %></div>
+            <% } %>
+          </li>
+        <% }) %>
+      <% } %>
+    </ul>
+  </div>
+
+  <div class="user-list">
+    <h2>Google Users (Signed in with Google)</h2>
+    <ul>
+      <% if (googleUsers.length === 0) { %>
+        <li>No Google users found.</li>
+      <% } else { %>
+        <% googleUsers.forEach(user => { %>
+          <li>
+            <strong><%= user.username %></strong>
+            <div class="email"><%= user.email %></div>
+          </li>
+        <% }) %>
+      <% } %>
+    </ul>
+  </div>
+</body>
+</html>

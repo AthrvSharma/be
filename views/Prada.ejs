@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PRADA | Luxury Redefined</title>
+
+    <!-- Fonts + Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Didot&family=Helvetica+Neue&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap + GSAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <style>
+        /* Luxury Global Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { scroll-behavior: smooth; }
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #000;
+            color: #F8F8F8;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Navbar */
+        .lux-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            border-bottom: 1px solid #E5C07B;
+        }
+        .lux-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+        .logo {
+            font-family: 'Didot', serif;
+            font-size: 2.5rem;
+            color: #E5C07B;
+            text-decoration: none;
+        }
+        .lux-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        .lux-menu li a {
+            color: #F8F8F8;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        .lux-menu li a:hover {
+            color: #E5C07B;
+        }
+        .lux-icons i {
+            font-size: 1.2rem;
+            color: #F8F8F8;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .lux-icons i:hover {
+            color: #E5C07B;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .hero-bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('/public/img17.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4);
+            z-index: -2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        .hero-content h1 {
+            font-family: 'Didot', serif;
+            font-size: 5rem;
+            color: #E5C07B;
+            margin-bottom: 20px;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        .lux-btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border: 2px solid #E5C07B;
+            color: #E5C07B;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+        .lux-btn:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .lux-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .lux-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1rem; }
+        }
+                /* ========================
+           Product Grid + Cards
+        ======================== */
+        #collection {
+            padding: 100px 0;
+            background-color: #000;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Didot', serif;
+            color: #E5C07B;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+        }
+
+        .product-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background-color: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .product-card-content h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .product-card-content p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #E5C07B;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .add-to-cart {
+            background-color: transparent;
+            color: #E5C07B;
+            border: 2px solid #E5C07B;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        .add-to-cart:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        @media(max-width: 768px){
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 20px;
+            }
+        }
+        .cart-button {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  background-color: #ff6f61;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.cart-button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cart-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#floating-cart i {
+    font-size: 20px;
+}
+#floating-cart:hover {
+    background-color: #C9A94A;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+    </style>
+</head>
+<body class="dark-mode">
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="lux-navbar">
+        <div class="lux-container">
+            <a href="#" class="logo">PRADA</a>
+            <ul class="lux-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="lux-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-user"></i>
+                <i class="fas fa-shopping-bag cart-icon"></i>
+            </div>
+           
+
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>PRADA</h1>
+            <p>Redefining Luxury </p>
+            <a href="#collection" class="lux-btn">Discover The Collection</a>
+        </div>
+        <div class="hero-bg-image"></div>
+    </section>
+
+    <!-- ===================== PRODUCT GRID START ===================== -->
+    <section id="collection">
+        <h2 class="section-title">Exclusive Collection</h2>
+        <div class="product-grid">
+            <!-- Example Products -->
+            <div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1BA/1BA906/2AO6F0E06/1BA906_2AO6_F0E06_V_EVM_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Prada Galleria Mini Bag">
+    <div class="product-card-content">
+        <h3>Prada Galleria Mini Bag</h3>
+        <p>Iconic Saffiano leather luxury mini bag.</p>
+        <div class="product-price">$790</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="clothes">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/2/291/291805/1XJXF0002/291805_1XJX_F0002_S_222_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Cropped Velvet Down Jacket">
+    <div class="product-card-content">
+        <h3>Cropped Velvet Down Jacket</h3>
+        <p>Luxurious convertible velvet winter jacket.</p>
+        <div class="product-price">$7800</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1IF/1IF154/068F0002/1IF154_068_F0002_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Velvet Hair Clip">
+    <div class="product-card-content">
+        <h3>Velvet Hair Clip</h3>
+        <p>Elegant Prada velvet hair accessory.</p>
+        <div class="product-price">$4500</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1BC/1BC515/2AWLF0T7O/1BC515_2AWL_F0T7O_V_OOO_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Satin Mini Bag with Crystals">
+    <div class="product-card-content">
+        <h3>Satin Mini Bag with Crystals</h3>
+        <p>Re-Edition satin mini-bag covered in crystals.</p>
+        <div class="product-price">$7100</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="clothes">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/134/134716/16V5F0009/134716_16V5_F0009_S_OOO_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Cotton Crew-neck Sweatshirt">
+    <div class="product-card-content">
+        <h3>Cotton Crew-neck Sweatshirt</h3>
+        <p>Classic black Prada luxury sweatshirt.</p>
+        <div class="product-price">$2200</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/S/SPR/SPRB06/E16KFE08Z/SPRB06_E16K_FE08Z_C_053_SLR.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Prada Symbole Sunglasses">
+    <div class="product-card-content">
+        <h3>Prada Symbole Sunglasses</h3>
+        <p>Contemporary sunglasses with triangle logo.</p>
+        <div class="product-price">$920</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="clothes">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1FS/1FS055/2COOF0ORZ/1FS055_2COO_F0ORZ_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Double Cashmere Scarf">
+    <div class="product-card-content">
+        <h3>Double Cashmere Scarf</h3>
+        <p>Soft double-layer luxury cashmere scarf.</p>
+        <div class="product-price">$1100</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1IO/1IO146/2C41F0056/1IO146_2C41_F0056_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Metal Earrings">
+    <div class="product-card-content">
+        <h3>Metal Earrings</h3>
+        <p>Elegant Prada metallic statement earrings.</p>
+        <div class="product-price">$490</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1IC/1IC149/2C41F0056/1IC149_2C41_F0056_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Metal Necklace">
+    <div class="product-card-content">
+        <h3>Metal Necklace</h3>
+        <p>Minimalist high-end Prada metal necklace.</p>
+        <div class="product-price">$1300</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1A2/1A2751/2IAGFBU10/1A2751_2IAG_FBU10_P_OOO_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Prada Optimizing Care Lip Balm">
+    <div class="product-card-content">
+        <h3>Optimizing Care Lip Balm</h3>
+        <p>Nourishing lip balm with luxury formula.</p>
+        <div class="product-price">$500</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="perfumes">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1A1/1A1351/2HDZF0Z99/1A1351_2HDZ_F0Z99_P_ML090_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Paradoxe EDP">
+    <div class="product-card-content">
+        <h3>Paradoxe EDP</h3>
+        <p>Signature Prada Paradoxe Eau de Parfum.</p>
+        <div class="product-price">$990</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="footwear">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1T8/1T817N/069F0002/1T817N_069_F0002_F_035_SLR.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Patent Leather Ankle Boots">
+    <div class="product-card-content">
+        <h3>Patent Leather Ankle Boots</h3>
+        <p>Exquisite black patent leather ankle boots.</p>
+        <div class="product-price">$1400</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="footwear">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/2/2EB/2EB200/055F0192/2EB200_055_F0192_F_X001_SLR.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Brushed Leather Lace-up Shoes">
+    <div class="product-card-content">
+        <h3>Brushed Leather Lace-up Shoes</h3>
+        <p>Polished luxury shoes with a timeless finish.</p>
+        <div class="product-price">$1640</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="perfumes">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/2/2A1/2A1155/2HC5F0Z99/2A1155_2HC5_F0Z99_P_ML100_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Luna Rossa Black EDP">
+    <div class="product-card-content">
+        <h3>Luna Rossa Black EDP</h3>
+        <p>Sophisticated Prada signature fragrance.</p>
+        <div class="product-price">$1770</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="footwear">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1I8/1I838N/069F0E06/1I838N_069_F0E06_F_085_SLR.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Patent Leather Slingback Pumps">
+    <div class="product-card-content">
+        <h3>Patent Leather Slingback Pumps</h3>
+        <p>Refined elegance in every step.</p>
+        <div class="product-price">$1200</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="footwear">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/2/2DB/2DB222/055F0D27/2DB222_055_F0D27_F_X000_SLR.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Brushed Leather Loafers">
+    <div class="product-card-content">
+        <h3>Brushed Leather Loafers</h3>
+        <p>Premium brushed leather luxury loafers.</p>
+        <div class="product-price">$5500</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1A7/1A7061/2IACF0Z99/1A7061_2IAC_F0Z99_P_ML125_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Prada The Cleanser">
+    <div class="product-card-content">
+        <h3>Prada The Cleanser</h3>
+        <p>Luxury facial cleanser from Prada skincare.</p>
+        <div class="product-price">$660</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="purses">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/2/2VH/2VH184/2BBEF0002/2VH184_2BBE_F0002_V_OOO_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.2400.2400.jpg" alt="Leather Shoulder Bag">
+    <div class="product-card-content">
+        <h3>Leather Shoulder Bag</h3>
+        <p>Classic Prada leather bag for everyday luxury.</p>
+        <div class="product-price">$3100</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1A5/1A5001/2IAVFBDW1/1A5001_2IAV_FBDW1_P_ML030_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Prada Skin Optimizing Foundation">
+    <div class="product-card-content">
+        <h3>Skin Optimizing Foundation</h3>
+        <p>Perfect complexion with Prada Reveal foundation.</p>
+        <div class="product-price">$1750</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="clothes">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/P/P24/P24G1V/1YMWF0F24/P24G1V_1YMW_F0F24_S_232_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Cashmere Wool Crew-neck Sweater">
+    <div class="product-card-content">
+        <h3>Cashmere Wool Crew-neck Sweater</h3>
+        <p>Refined Prada logo sweater in wool and cashmere.</p>
+        <div class="product-price">$2100</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1HP/1HP605/2EC9F03W3/1HP605_2EC9_F03W3_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Shearling Earmuffs">
+    <div class="product-card-content">
+        <h3>Shearling Earmuffs</h3>
+        <p>Luxurious and warm Prada shearling earmuffs.</p>
+        <div class="product-price">$1000</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="purses">
+    <img src="https://www.prada.com/content/dam/pradanux_products/1/1NI/1NI545/R067F0076/1NI545_R067_F0076_SLF.png/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Re-Nylon Mini Bag">
+    <div class="product-card-content">
+        <h3>Re-Nylon Mini Bag</h3>
+        <p>Sustainable elegance with Prada Re-Nylon.</p>
+        <div class="product-price">$4100</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1HC/1HC137/2DMIF0632/1HC137_2DMI_F0632_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Re-Nylon Bucket Hat">
+    <div class="product-card-content">
+        <h3>Re-Nylon Bucket Hat</h3>
+        <p>Iconic Prada bucket hat in sustainable nylon.</p>
+        <div class="product-price">$5100</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="purses">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1NS/1NS175/R067F0002/1NS175_R067_F0002_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Re-Nylon Pouch">
+    <div class="product-card-content">
+        <h3>Re-Nylon Pouch</h3>
+        <p>Compact and stylish Prada Re-Nylon pouch.</p>
+        <div class="product-price">$2100</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1HC/1HC336/068F0002/1HC336_068_F0002_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Velvet Baseball Cap">
+    <div class="product-card-content">
+        <h3>Velvet Baseball Cap</h3>
+        <p>Prada signature cap crafted in luxury velvet.</p>
+        <div class="product-price">$920</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/S/SPR/SPR14Y/E1ABFE30L/SPR14Y_E1AB_FE30L_C_053_SLR.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Sunglasses with Triangle Logo">
+    <div class="product-card-content">
+        <h3>Sunglasses with Triangle Logo</h3>
+        <p>Contemporary Prada sunglasses with logo design.</p>
+        <div class="product-price">$1900</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1CC/1CC621/2AO6F0002/1CC621_2AO6_F0002_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Patent Leather Belt">
+    <div class="product-card-content">
+        <h3>Patent Leather Belt</h3>
+        <p>Elegant black belt with Prada’s luxury touch.</p>
+        <div class="product-price">$990</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1IA/1IA045/2C41F0056/1IA045_2C41_F0056_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Metal Ring">
+    <div class="product-card-content">
+        <h3>Metal Ring</h3>
+        <p>Bold Prada ring crafted from premium metals.</p>
+        <div class="product-price">$1570</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1TT/1TT205/2DMKF0632/1TT205_2DMK_F0632_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Mini Icon Re-Nylon Bag Charm">
+    <div class="product-card-content">
+        <h3>Mini Icon Re-Nylon Bag Charm</h3>
+        <p>Chic mini charm for Prada Re-Nylon bags.</p>
+        <div class="product-price">$420</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="accessories">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1CM/1CM263/8NQF0ORP/1CM263_8NQ_F0ORP_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Leather Belt">
+    <div class="product-card-content">
+        <h3>Leather Belt</h3>
+        <p>Crafted from smooth premium Prada leather.</p>
+        <div class="product-price">$2300</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="purses">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1BC/1BC204/2C7BF0151/1BC204_2C7B_F0151_V_QOM_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Re-Edition Printed Leather Mini-bag">
+    <div class="product-card-content">
+        <h3>Re-Edition Printed Leather Mini-bag</h3>
+        <p>Modern mini bag with luxury leather prints.</p>
+        <div class="product-price">$1740</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="product-card" data-category="purses">
+    <img src="https://www.prada.com/content/dam/pradabkg_products/1/1BG/1BG542/2C4SF0324/1BG542_2C4S_F0324_V_OVO_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg" alt="Mini Suede Shopping Bag">
+    <div class="product-card-content">
+        <h3>Mini Suede Shopping Bag</h3>
+        <p>Elegant and compact Prada suede shopping bag.</p>
+        <div class="product-price">$1800</div>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+    </section>
+
+    <!-- ===================== BACK TO TOP BUTTON ===================== -->
+    <button class="back-to-top" id="backToTopBtn">&#8679;</button>
+
+    <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Animation
+    gsap.from(".hero-content h1", {
+        opacity: 0,
+        y: -40,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".hero-content p", {
+        opacity: 0,
+        y: 20,
+        delay: 0.2,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".lux-btn", {
+    opacity: 0,
+    y: 30,
+    delay: 0.4,
+    duration: 1,
+    ease: "power3.out",
+    onComplete: () => gsap.set(".lux-btn", { clearProps: "all" })   // 👈 fixes glitch
+});
+
+
+    // Product Grid Animation
+    gsap.from(".product-card", {
+        scrollTrigger: {
+            trigger: ".product-grid",
+            start: "top 85%"
+        },
+        opacity: 0,
+        scale: 0.8,
+        y: 30,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+
+    // Back to Top Button
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = 'block';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    });
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Add to Cart
+    const cartIcon = document.querySelector('.cart-icon');
+    const cart = document.createElement('div');
+    cart.style.position = 'fixed';
+    cart.style.top = '70px';
+    cart.style.right = '-350px';
+    cart.style.width = '300px';
+    cart.style.background = '#111';
+    cart.style.padding = '15px';
+    cart.style.borderRadius = '10px';
+    cart.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+    cart.style.zIndex = '10000';
+    cart.style.transition = 'right 0.4s ease';
+    cart.innerHTML = `
+        <h4 style="color:#E5C07B; text-align:center;">🛒 Your Cart</h4>
+        <ul class="cart-list" style="list-style:none; padding:10px 0;"></ul>
+        <div style="text-align:center;">
+            <button class="checkout-btn" style="margin-top:10px;background:green;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Checkout</button>
+            <button class="close-cart" style="margin-top:10px;background:red;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Close</button>
+        </div>
+    `;
+    document.body.appendChild(cart);
+
+    cartIcon.addEventListener('click', () => {
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+    });
+    cart.querySelector('.close-cart').addEventListener('click', () => {
+        gsap.to(cart, { right: '-350px', duration: 0.4 });
+    });
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
+        const card = button.closest('.product-card');
+        const title = card.querySelector('h3').textContent;
+        const price = card.querySelector('.product-price').textContent;
+        const imageSrc = card.querySelector('img').src;
+
+        const cartList = cart.querySelector('.cart-list');
+
+        // ✅ Check if product already exists in cart
+        let existingItem = Array.from(cartList.children).find(li =>
+            li.querySelector('.cart-title')?.textContent === title
+        );
+
+        if (existingItem) {
+            // ✅ Increase quantity if item already exists
+            let qtyElem = existingItem.querySelector('.item-qty');
+            qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
+            updateLocalStorageCart();
+        } else {
+            // ✅ Create new cart item
+            const cartItem = document.createElement('li');
+            cartItem.style.display = 'flex';
+            cartItem.style.alignItems = 'center';
+            cartItem.style.marginBottom = '10px';
+            cartItem.innerHTML = `
+                <img src="${imageSrc}" style="width:50px;height:50px;object-fit:cover;margin-right:10px;border-radius:5px;">
+                <div>
+                    <p class="cart-title" style="margin:0;font-size:14px;color:#fff;">${title}</p>
+                    <p style="margin:0;font-size:12px;color:#aaa;">${price}</p>
+                    <p style="margin:0;font-size:12px;color:#E5C07B;">Qty: <span class="item-qty">1</span></p>
+                </div>
+                <button class="remove-btn" style="margin-left:auto;color:red;background:none;border:none;font-size:18px;cursor:pointer;">&#10005;</button>
+            `;
+            cartList.appendChild(cartItem);
+
+            gsap.from(cartItem, { opacity: 0, x: 50, duration: 0.5 });
+            updateLocalStorageCart();
+        }
+
+        // ✅ Always open cart when adding
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+
+        // ✅ Attach remove button logic with quantity check
+        cart.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.onclick = function() {
+                const item = btn.closest('li');
+                const qtyElem = item.querySelector('.item-qty');
+                const qty = parseInt(qtyElem.textContent);
+
+                if (qty > 1) {
+                    qtyElem.textContent = qty - 1;  // reduce qty
+                } else {
+                    item.remove();  // remove item if qty = 1
+                }
+                updateLocalStorageCart();
+            };
+
+        });
+    });
+});
+
+// ✅ Save cart to localStorage
+function updateLocalStorageCart() {
+    const cartItems = [];
+    document.querySelectorAll('.cart-list li').forEach(item => {
+        cartItems.push({
+            title: item.querySelector('.cart-title').textContent,
+            price: item.querySelector('p:nth-of-type(2)').textContent,
+            image: item.querySelector('img').src,
+            quantity: item.querySelector('.item-qty').textContent
+        });
+    });
+    localStorage.setItem('pradaCart', JSON.stringify(cartItems));
+}
+
+
+
+    // Checkout Button Action (for example, show alert)
+   cart.querySelector('.checkout-btn').addEventListener('click', () => {
+    window.location.href = 'checkout.html'; // 👈 opens checkout page instead of alert
+});
+
+   
+// ===================== FLOATING CART BUTTON =====================
+// const floatingCartBtn = document.createElement('div');
+// floatingCartBtn.id = 'floating-cart';
+// floatingCartBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i>';   // ✅ Correct icon
+// document.body.appendChild(floatingCartBtn);
+
+// // Style (matches luxury theme & fixes your issue)
+// const floatingStyle = floatingCartBtn.style;
+// floatingStyle.position = 'fixed';
+// floatingStyle.top = '80px';                                       // ✅ Slightly lower (looks better)
+// floatingStyle.right = '20px';
+// floatingStyle.backgroundColor = '#E5C07B';
+// floatingStyle.color = '#000';
+// floatingStyle.width = '55px';                                     // ✅ Fixed width
+// floatingStyle.height = '55px';                                    // ✅ Fixed height
+// floatingStyle.display = 'flex';
+// floatingStyle.alignItems = 'center';
+// floatingStyle.justifyContent = 'center';
+// floatingStyle.fontSize = '22px';                                  // ✅ Bigger icon
+// floatingStyle.borderRadius = '50%';
+// floatingStyle.cursor = 'pointer';
+// floatingStyle.boxShadow = '0 4px 10px rgba(0,0,0,0.5)';
+// floatingStyle.zIndex = '10000';
+// floatingStyle.transition = 'all 0.3s ease';
+// floatingStyle.display = 'none';
+
+// // Hover effect (luxury style)
+// floatingCartBtn.addEventListener('mouseover', () => {
+//     floatingCartBtn.style.transform = 'scale(1.1)';
+// });
+// floatingCartBtn.addEventListener('mouseout', () => {
+//     floatingCartBtn.style.transform = 'scale(1)';
+// });
+
+// // Show/Hide on scroll past #collection
+// window.addEventListener('scroll', () => {
+//     const collectionSection = document.querySelector('#collection');
+//     if (!collectionSection) return;
+//     const collectionTop = collectionSection.offsetTop;
+//     const scrollY = window.scrollY || window.pageYOffset;
+
+//     if (scrollY >= collectionTop) {
+//         floatingCartBtn.style.display = 'flex';                    // ✅ Use flex (not block)
+//     } else {
+//         floatingCartBtn.style.display = 'none';
+//     }
+// });
+
+// // Link floating cart button to open your cart
+// floatingCartBtn.addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+// // ALSO: Link navbar cart icon to same cart
+// document.querySelector('.cart-icon').addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+    </script>
+
+</body>
+</html>
+
+
+            <!-- You can continue with your remaining 29 products here in the same format -->

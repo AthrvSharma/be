@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VOGUE VIBE – Ultimate Luxury Fashion Website</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+  <!-- GSAP & Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #ffffff;
+      --accent: #d4af37;
+      --dark-bg: #0e0e0e;
+      --light-bg: #f5f5f5;
+      --light-text: #ffffff;
+      --dark-text: #111111;
+      --fade: rgba(255, 255, 255, 0.06);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-bg);
+      color: var(--light-text);
+      scroll-behavior: smooth;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.light-mode {
+      background: var(--light-bg);
+      color: var(--dark-text);
+    }
+
+    header.sticky {
+      background: #000000ee !important;
+      box-shadow: 0 4px 12px var(--fade);
+      padding: 8px 40px !important;
+      transition: all 0.4s ease;
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      background: #111111dd;
+      backdrop-filter: blur(6px);
+      padding: 15px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+      box-shadow: 0 4px 12px var(--fade);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .icons i {
+      margin-left: 18px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .icons i:hover {
+      transform: scale(1.3);
+      color: var(--accent);
+    }
+
+    /* ✅ Luxury Parallax Hero Section */
+.hero-section {
+    height: 100vh;
+    background: url('/public/img3.png') center center / cover no-repeat fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--light-text);
+    position: relative;
+}
+
+.hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin: 25px 0;
+    color: #ddd;
+}
+
+.hero-content a {
+    background-color: var(--accent);
+    color: var(--dark-text);
+    padding: 16px 35px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 1.1rem;
+    transition: all 0.4s ease;
+}
+
+.hero-content a:hover {
+    background-color: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+
+ /* ✅ Ultra Premium Luxury Swiper Slider */
+.mySwiper {
+    padding-bottom: 60px;
+}
+.mySwiper .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mySwiper img {
+    height: 450px;
+    width: auto;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.mySwiper img:hover {
+    transform: scale(1.07);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+.swiper-button-next, .swiper-button-prev {
+    color: var(--accent); 
+}
+.swiper-pagination-bullet {
+    background: var(--accent);
+}
+
+
+
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">VOGUE VIBE</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#carousel">Trending</a>
+      <a href="#products">Products</a>
+      <a href="#collections">Collections</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="icons">
+      <i class="fas fa-search"></i>
+      <i class="fas fa-shopping-cart"></i>
+      <i class="fas fa-user" onclick="toggleLoginModal()"></i>
+      <i class="fas fa-moon" id="themeToggle"></i>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+ <!-- Hero Section -->
+<section class="hero-section" id="home">
+    <div class="hero-content">
+      <h1>Redefine Luxury</h1>
+      <p>Discover the world’s most exclusive collections, crafted for those who dare to define their style.</p>
+      <a href="#products">Explore Collection</a>
+    </div>
+</section>
+
+
+  <!-- Product Carousel -->
+  <section class="section bg-dark text-light" id="carousel" style="padding: 100px 60px;">
+    <h2 class="section-title text-center">Trending Now</h2>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="/public/img5.jpg" class="img-fluid rounded shadow"></div>
+        <div class="swiper-slide"><img src="/public/img4.jpg" class="img-fluid rounded shadow"></div>
+        <div class="swiper-slide"><img src="/public/img6.jpg" class="img-fluid rounded shadow"></div>
+        <div class="swiper-slide"><img src="/public/img7.jpg" class="img-fluid rounded shadow"></div>
+        <div class="swiper-slide"><img src="/public/img8.jpg" class="img-fluid rounded shadow"></div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </section>
+  <!-- Products Section -->
+  <section class="section" id="products" style="padding: 100px 60px;">
+    <h2 class="section-title text-center">Featured Products</h2>
+
+    <!-- Filter Buttons -->
+    <div class="text-center mb-4">
+      <button class="btn btn-outline-light mx-2" onclick="filterProducts('all')">All</button>
+      <button class="btn btn-outline-warning mx-2" onclick="filterProducts('perfume')">Perfumes</button>
+      <button class="btn btn-outline-warning mx-2" onclick="filterProducts('shoes')">Shoes</button>
+      <button class="btn btn-outline-warning mx-2" onclick="filterProducts('bags')">Bags</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="row g-4" id="productGrid">
+      <div class="col-md-3 product-card" data-category="perfume">
+        <img src="/public/img12.jpg" class="img-fluid rounded shadow" alt="">
+        <h4 class="mt-3 text-center">Gucci Pour Homme</h4>
+        <p class="text-muted text-center">Signature fragrance for him</p>
+        <p class="text-center fw-bold text-warning">$120</p>
+        <div class="text-center">
+          <button class="btn btn-outline-warning add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="col-md-3 product-card" data-category="bags">
+        <img src="/public/img11.jpg" class="img-fluid rounded shadow" alt="">
+        <h4 class="mt-3 text-center">Gucci Belt</h4>
+        <p class="text-muted text-center">Premium leather accessory</p>
+        <p class="text-center fw-bold text-warning">$180</p>
+        <div class="text-center">
+          <button class="btn btn-outline-warning add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="col-md-3 product-card" data-category="shoes">
+        <img src="/public/img13.jpg" class="img-fluid rounded shadow" alt="">
+        <h4 class="mt-3 text-center">Horsebit Boot</h4>
+        <p class="text-muted text-center">Refined women's boot</p>
+        <p class="text-center fw-bold text-warning">$250</p>
+        <div class="text-center">
+          <button class="btn btn-outline-warning add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="col-md-3 product-card" data-category="perfume">
+        <img src="/public/img14.jpg" class="img-fluid rounded shadow" alt="">
+        <h4 class="mt-3 text-center">Gucci Essence</h4>
+        <p class="text-muted text-center">Luxury Eau de Parfum</p>
+        <p class="text-center fw-bold text-warning">$140</p>
+        <div class="text-center">
+          <button class="btn btn-outline-warning add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collections Section -->
+  <section class="section bg-dark text-light" id="collections" style="padding: 100px 60px;">
+    <h2 class="section-title text-center">2024 Exclusive Collections</h2>
+
+    <div class="row g-5">
+      <div class="col-md-6">
+        <img src="/public/img15.jpg" class="img-fluid rounded shadow-lg" alt="">
+      </div>
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <h3>Spring Luxe Collection</h3>
+        <p class="fs-5">A blend of bold patterns, neutral tones and rich textures. Experience contemporary fashion with unmatched craftsmanship. Limited editions now available.</p>
+        <a href="#products" class="btn btn-outline-warning btn-lg mt-3">Shop Spring Luxe</a>
+      </div>
+    </div>
+
+    <div class="row g-5 mt-5">
+      <div class="col-md-6 d-flex flex-column justify-content-center order-md-2">
+        <h3>Modern Essentials</h3>
+        <p class="fs-5">Redefine your style with our curated Modern Essentials capsule. Minimalist silhouettes meet the finest fabrics for an effortlessly powerful look.</p>
+        <a href="#products" class="btn btn-outline-warning btn-lg mt-3">Shop Essentials</a>
+      </div>
+      <div class="col-md-6 order-md-1">
+        <img src="/public/img16.jpeg" class="img-fluid rounded shadow-lg" alt="">
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section bg-light text-dark" id="testimonials" style="padding: 100px 60px;">
+    <h2 class="section-title text-center">What Our Customers Say</h2>
+
+    <div class="row g-5">
+      <div class="col-md-4">
+        <div class="p-4 shadow rounded bg-white">
+          <i class="fas fa-quote-left fa-2x text-warning mb-3"></i>
+          <p>"VOGUE VIBE transformed my entire wardrobe. The elegance and quality are unmatched. I’m in love!"</p>
+          <h5 class="mt-3">- Isabella R.</h5>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="p-4 shadow rounded bg-white">
+          <i class="fas fa-quote-left fa-2x text-warning mb-3"></i>
+          <p>"The shopping experience is luxurious and smooth. The packaging alone is worth the price!"</p>
+          <h5 class="mt-3">- Alexander M.</h5>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="p-4 shadow rounded bg-white">
+          <i class="fas fa-quote-left fa-2x text-warning mb-3"></i>
+          <p>"I’ve been a loyal customer for years. The new Spring Luxe Collection is simply stunning."</p>
+          <h5 class="mt-3">- Emily T.</h5>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section bg-dark text-light" id="about" style="padding: 100px 60px;">
+    <h2 class="section-title text-center">Our Philosophy</h2>
+
+    <div class="row g-5">
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <h3>The Art of Fashion</h3>
+        <p class="fs-5">At VOGUE VIBE, fashion is not just clothing — it is a journey of identity. Our collections are designed to enhance your individuality while maintaining timeless elegance.</p>
+        <p class="fs-5">We work only with the finest materials and visionary designers globally to create pieces that captivate and inspire confidence.</p>
+      </div>
+      <div class="col-md-6">
+        <img src="/img13.jpg" class="img-fluid rounded shadow-lg" alt="">
+      </div>
+    </div>
+  </section>
+  <!-- Parallax Banner -->
+  <section class="parallax-banner" style="background-image: url('/public/img3.png'); height: 500px; background-attachment: fixed; background-size: cover; background-position: center;">
+    <div class="d-flex h-100 align-items-center justify-content-center text-center">
+      <div>
+        <h2 class="display-4 text-white fw-bold">Unleash Your Inner Style Icon</h2>
+        <a href="#products" class="btn btn-outline-light mt-4">Explore Collection</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="section bg-light text-dark" id="newsletter" style="padding: 100px 60px;">
+    <h2 class="section-title text-center">Join Our Newsletter</h2>
+    <div class="d-flex flex-column align-items-center">
+      <p class="fs-5 text-center mb-4">Be the first to know about new arrivals, exclusive offers & style news.</p>
+      <div class="input-group mb-3 w-50">
+        <input type="email" class="form-control" placeholder="Enter your email">
+        <button class="btn btn-outline-warning" type="button">Subscribe</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Call to Action Button -->
+  <a href="#products" class="btn btn-warning position-fixed bottom-0 start-0 m-4 shadow rounded-pill px-4 py-3 fw-bold" style="z-index: 9999;">Shop Now <i class="fas fa-arrow-right"></i></a>
+  <!-- Footer -->
+  <footer class="bg-black text-light pt-5 pb-4 mt-5">
+    <div class="container text-md-left">
+      <div class="row text-md-left">
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-warning">VOGUE VIBE</h5>
+          <p>Discover timeless luxury with our curated collections. Shop exclusive designs crafted for elegance & individuality.</p>
+        </div>
+
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Shop</h5>
+          <p><a href="#products" class="text-light">All Products</a></p>
+          <p><a href="#collections" class="text-light">Collections</a></p>
+          <p><a href="#products" class="text-light">New Arrivals</a></p>
+          <p><a href="#products" class="text-light">Accessories</a></p>
+        </div>
+
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
+          <p><a href="#about" class="text-light">About Us</a></p>
+          <p><a href="#testimonials" class="text-light">Reviews</a></p>
+          <p><a href="#contact" class="text-light">Contact</a></p>
+          <p><a href="#" class="text-light">Help & Support</a></p>
+        </div>
+
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
+          <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+          <p><i class="fas fa-envelope mr-3"></i> support@voguevibe.com</p>
+          <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+        </div>
+      </div>
+
+      <hr class="mb-4">
+      <div class="row align-items-center">
+        <div class="col-md-7 col-lg-8">
+          <p>© 2024 VOGUE VIBE | Designed with 💎 by Your Brand</p>
+        </div>
+        <div class="col-md-5 col-lg-4">
+          <div class="text-center text-md-right">
+            <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
+            <a href="#" class="text-light me-3"><i class="fab fa-twitter fa-lg"></i></a>
+            <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
+            <a href="#" class="text-light me-3"><i class="fab fa-pinterest fa-lg"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollTopBtn" class="btn btn-warning position-fixed bottom-0 end-0 m-4 rounded-circle"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-none align-items-center justify-content-center" style="z-index: 1050;">
+    <div class="bg-light p-5 rounded shadow text-dark" style="max-width: 400px;">
+      <h3 class="mb-4 text-center">Login</h3>
+      <input type="text" class="form-control mb-3" placeholder="Username">
+      <input type="password" class="form-control mb-3" placeholder="Password">
+      <button class="btn btn-warning w-100 mb-3">Login</button>
+      <p class="text-center"><span class="text-primary" style="cursor:pointer;" onclick="switchToSignup()">Don't have an account? Sign Up</span></p>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signupModal" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-none align-items-center justify-content-center" style="z-index: 1050;">
+    <div class="bg-light p-5 rounded shadow text-dark" style="max-width: 400px;">
+      <h3 class="mb-4 text-center">Sign Up</h3>
+      <input type="text" class="form-control mb-3" placeholder="Username">
+      <input type="email" class="form-control mb-3" placeholder="Email">
+      <input type="password" class="form-control mb-3" placeholder="Password">
+      <button class="btn btn-warning w-100 mb-3">Register</button>
+      <p class="text-center"><span class="text-primary" style="cursor:pointer;" onclick="switchToLogin()">Already a member? Login</span></p>
+    </div>
+  </div>
+  <!-- Scripts -->
+  <script>
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+    });
+
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    window.addEventListener("scroll", () => {
+      scrollTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+    });
+    scrollTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    function filterProducts(category) {
+      document.querySelectorAll(".product-card").forEach(card => {
+        card.style.display = category === "all" || card.dataset.category === category ? "block" : "none";
+      });
+    }
+
+    function toggleLoginModal() {
+      document.getElementById("loginModal").classList.toggle("d-none");
+    }
+    function switchToSignup() {
+      document.getElementById("loginModal").classList.add("d-none");
+      document.getElementById("signupModal").classList.remove("d-none");
+    }
+    function switchToLogin() {
+      document.getElementById("signupModal").classList.add("d-none");
+      document.getElementById("loginModal").classList.remove("d-none");
+    }
+    document.querySelectorAll("#loginModal, #signupModal").forEach(modal => {
+      modal.addEventListener("click", e => {
+        if (e.target === modal) modal.classList.add("d-none");
+      });
+    });
+
+    gsap.to("header", {
+      scrollTrigger: {
+        start: "top -20",
+        end: 99999,
+        toggleClass: {className: "sticky", targets: "header"}
+      }
+    });
+
+    // ✅ Improved Premium Swiper Slider
+// ✅ Ultra Premium Luxury Swiper
+const swiper = new Swiper('.mySwiper', {
+    spaceBetween: 20,
+    slidesPerView: 1.8,
+    centeredSlides: true,
+    loop: true,
+    grabCursor: true,
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    }
+});
+
+
+
+    gsap.from(".swiper-slide img", {
+      scrollTrigger: ".mySwiper",
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "back.out(1.7)"
+    });
+
+    gsap.from(".parallax-banner h2", {
+      scrollTrigger: ".parallax-banner",
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out"
+    });
+
+    gsap.from(".parallax-banner a", {
+      scrollTrigger: ".parallax-banner",
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      delay: 0.3,
+      ease: "power2.out"
+    });
+
+    gsap.from(".section-title", {
+      scrollTrigger: ".section-title",
+      y: -50,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "power2.out"
+    });
+
+    gsap.utils.toArray(".product-card, .row.g-5 > div").forEach(item => {
+      gsap.from(item, {
+        scrollTrigger: { trigger: item, start: "top 90%" },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power2.out"
+      });
+    });
+    // ✅ Luxury Hero Scroll Animation
+gsap.from(".hero-content h1", {
+    scrollTrigger: ".hero-section",
+    y: 60,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+});
+gsap.from(".hero-content p", {
+    scrollTrigger: ".hero-section",
+    y: 40,
+    opacity: 0,
+    delay: 0.3,
+    duration: 1,
+    ease: "power3.out"
+});
+gsap.from(".hero-content a", {
+    scrollTrigger: ".hero-section",
+    y: 20,
+    opacity: 0,
+    delay: 0.6,
+    duration: 1,
+    ease: "power3.out"
+});
+
+  </script>
+
+</body>
+</html>

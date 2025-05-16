@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CHANEL | Luxury Redefined</title>
+
+    <!-- Fonts + Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Didot&family=Helvetica+Neue&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap + GSAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <style>
+        /* Luxury Global Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { scroll-behavior: smooth; }
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #000;
+            color: #F8F8F8;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Navbar */
+        .lux-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            border-bottom: 1px solid #E5C07B;
+        }
+        .lux-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+        .logo {
+            font-family: 'Didot', serif;
+            font-size: 2.5rem;
+            color: #E5C07B;
+            text-decoration: none;
+        }
+        .lux-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        .lux-menu li a {
+            color: #F8F8F8;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        .lux-menu li a:hover {
+            color: #E5C07B;
+        }
+        .lux-icons i {
+            font-size: 1.2rem;
+            color: #F8F8F8;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .lux-icons i:hover {
+            color: #E5C07B;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .hero-bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('/public/img17.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4);
+            z-index: -2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        .hero-content h1 {
+            font-family: 'Didot', serif;
+            font-size: 5rem;
+            color: #E5C07B;
+            margin-bottom: 20px;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        .lux-btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border: 2px solid #E5C07B;
+            color: #E5C07B;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+        .lux-btn:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .lux-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .lux-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1rem; }
+        }
+                /* ========================
+           Product Grid + Cards
+        ======================== */
+        #collection {
+            padding: 100px 0;
+            background-color: #000;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Didot', serif;
+            color: #E5C07B;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+        }
+
+        .product-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background-color: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .product-card-content h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .product-card-content p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #E5C07B;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .add-to-cart {
+            background-color: transparent;
+            color: #E5C07B;
+            border: 2px solid #E5C07B;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        .add-to-cart:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        @media(max-width: 768px){
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 20px;
+            }
+        }
+        .cart-button {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  background-color: #ff6f61;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.cart-button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cart-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#floating-cart i {
+    font-size: 20px;
+}
+#floating-cart:hover {
+    background-color: #C9A94A;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+    </style>
+</head>
+<body class="dark-mode">
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="lux-navbar">
+        <div class="lux-container">
+            <a href="#" class="logo">CHANEL</a>
+            <ul class="lux-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="lux-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-user"></i>
+                <i class="fas fa-shopping-bag cart-icon"></i>
+            </div>
+           
+
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>CHANEL</h1>
+            <p>Redefining Luxury</p>
+            <a href="#collection" class="lux-btn">Discover The Collection</a>
+        </div>
+        <div class="hero-bg-image"></div>
+    </section>
+
+    <!-- ===================== PRODUCT GRID START ===================== -->
+   <section id="collection">
+  <h2 class="section-title">Exclusive Collection</h2>
+  <div class="product-grid">
+
+    <!-- Product 1 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/diamond-dust-oversize-illuminating-powder-0-53oz--packshot-default-151967-9545696641054.jpg" alt="DIAMOND DUST">
+  <div class="product-card-content">
+    <h3>DIAMOND DUST</h3>
+    <p>Oversize illuminating powder for a radiant finish.</p>
+    <div class="product-price">950€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 2 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.43,h_0.43,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/baume-essentiel-multi-use-glow-stick-dragee-0-28oz--packshot-default-169055-9516954419230.jpg" alt="BAUME ESSENTIEL">
+  <div class="product-card-content">
+    <h3>BAUME ESSENTIEL</h3>
+    <p>Multi-use glow stick for face and lips.</p>
+    <div class="product-price">1200€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 3 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/gabrielle-chanel-foaming-shower-gel-6-8fl-oz--packshot-default-120960-8818198413342.jpg" alt="GABRIELLE CHANEL">
+  <div class="product-card-content">
+    <h3>GABRIELLE CHANEL</h3>
+    <p>Luxurious foaming shower gel with signature fragrance.</p>
+    <div class="product-price">450€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 4 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/n-5-eau-de-parfum-3-4fl-oz--packshot-default-125598-9549534920734.jpg" alt="EAU DE PARFUM">
+  <div class="product-card-content">
+    <h3>EAU DE PARFUM</h3>
+    <p>Timeless fragrance of CHANEL N°5.</p>
+    <div class="product-price">1150€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 5 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/chance-eau-tendre-eau-de-parfum-spray-3-4fl-oz--packshot-default-126260-9539148546078.jpg" alt="CHANCE EAU TENDRE">
+  <div class="product-card-content">
+    <h3>CHANCE EAU TENDRE</h3>
+    <p>Floral-fruity eau de parfum spray.</p>
+    <div class="product-price">4300€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 6 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one///q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/j12-diamond-bezel-watch-caliber-12-2-33-mm-white-white-ceramic-steel-diamond-packshot-default-h10473-9553448075294.jpg" alt="J12 Diamond Bezel Watch">
+  <div class="product-card-content">
+    <h3>J12 Diamond Bezel Watch</h3>
+    <p>Elegant white ceramic & diamond-set bezel watch.</p>
+    <div class="product-price">2500€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 7 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one///q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/premiere-edition-originale-watch-yellow-black-calfskin-gold-coating-packshot-default-h6951-9530399621150.jpg" alt="Première Édition Originale Watch">
+  <div class="product-card-content">
+    <h3>Première Édition Originale Watch</h3>
+    <p>Gold-tone watch with black calfskin strap.</p>
+    <div class="product-price">1340€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 8 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_zoomjewelry2/f_auto/coco-crush-ring-beige-beige-gold-diamond-packshot-default-j11786-8829173170206.jpg" alt="Coco Crush ring">
+  <div class="product-card-content">
+    <h3>Coco Crush ring</h3>
+    <p>Beige gold ring with diamond detail.</p>
+    <div class="product-price">1950€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+<!-- Product 9 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_zoomjewelry2/f_auto/coco-bracelet-red-beige-beige-gold-ruby-packshot-default-j13044-9559502716958.jpg" alt="COCO bracelet">
+  <div class="product-card-content">
+    <h3>COCO bracelet</h3>
+    <p>Beige gold bracelet set with rubies.</p>
+    <div class="product-price">9170€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 10 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one///q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/eternal-n-5-bracelet-beige-beige-gold-diamond-packshot-default-j12812-9554930827294.jpg" alt="Eternal N°5 bracelet">
+  <div class="product-card-content">
+    <h3>Eternal N°5 bracelet</h3>
+    <p>Beige gold bracelet featuring the iconic N°5 motif and diamonds.</p>
+    <div class="product-price">850€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 11 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_fashionzoom1/f_auto/cat-eye-sunglasses-black-acetate-strass-acetate-strass-packshot-extra-a71668x02569s2216-9550229241886.jpg" alt="Cat Eye Sunglasses">
+  <div class="product-card-content">
+    <h3>Cat Eye Sunglasses</h3>
+    <p>Chic black acetate cat-eye frame with crystal details.</p>
+    <div class="product-price">450€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 12 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_326/FSH-1729239964244-g46194b1899394305.jpg" alt="MOCCASINS">
+  <div class="product-card-content">
+    <h3>MOCCASINS</h3>
+    <p>Classic leather moccasins with signature CHANEL detailing.</p>
+    <div class="product-price">1200€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 13 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_326/FSH-1729239986686-p78805v71012nadfi.jpg" alt="JUMPSUIT">
+  <div class="product-card-content">
+    <h3>JUMPSUIT</h3>
+    <p>Elegant CHANEL jumpsuit crafted for a timeless silhouette.</p>
+    <div class="product-price">2310€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 14 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/antaeus-eau-de-toilette-spray-3-4fl-oz--packshot-default-118460-8824198627358.jpg" alt="ANTAEUS">
+  <div class="product-card-content">
+    <h3>ANTAEUS</h3>
+    <p>Intense eau de toilette with powerful aromatic notes.</p>
+    <div class="product-price">1950€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 15 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one/t_fashion9//b_rgb:F7F7F7,e_brightness:-3/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/shield-sunglasses-burgundy-navy-blue-nylon-nylon-packshot-default-a71615x02081s7341-9540995645470.jpg" alt="Shield Sunglasses">
+  <div class="product-card-content">
+    <h3>Shield Sunglasses</h3>
+    <p>Bold oversized shield sunglasses with nylon frame.</p>
+    <div class="product-price">1700€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 16 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_one//w_0.43,h_0.43,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_480//le-lift-creme-smooths-firms-illuminates-1-7fl-oz--packshot-default-141780-8845084131358.jpg" alt="LE LIFT CRÈME">
+  <div class="product-card-content">
+    <h3>LE LIFT CRÈME</h3>
+    <p>Advanced smoothing and firming face cream by CHANEL.</p>
+    <div class="product-price">3100€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+<!-- Product 17 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_682/-9550682947614.jpg" alt="SANDALS">
+  <div class="product-card-content">
+    <h3>SANDALS</h3>
+    <p>Elegant high-fashion sandals by CHANEL in premium leather.</p>
+    <div class="product-price">9500€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 18 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_516/-9550687633438.jpg" alt="Thongs">
+  <div class="product-card-content">
+    <h3>Thongs</h3>
+    <p>Luxury CHANEL thongs with fine craftsmanship and comfort.</p>
+    <div class="product-price">1320€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 19 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images///f_auto,q_auto:good,dpr_1.1/w_960/-9551028846622.jpg" alt="Stud Earrings">
+  <div class="product-card-content">
+    <h3>Stud Earrings</h3>
+    <p>Classic CHANEL stud earrings designed for timeless elegance.</p>
+    <div class="product-price">950€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 20 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images///f_auto,q_auto:good,dpr_1.1/w_480/-9551020621854.jpg" alt="Stud Earrings">
+  <div class="product-card-content">
+    <h3>Stud Earrings</h3>
+    <p>Refined CHANEL stud earrings perfect for any occasion.</p>
+    <div class="product-price">1050€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 21 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one///q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/eternal-n-5-necklace-yellow-yellow-gold-diamond-packshot-default-j12938-9558531604510.jpg" alt="Eternal N°5 necklace">
+  <div class="product-card-content">
+    <h3>Eternal N°5 necklace</h3>
+    <p>Yellow gold necklace with diamond accents, inspired by N°5.</p>
+    <div class="product-price">9500€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 22 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/ultimate-allure-makeup-set-2pce-packshot-default-100833-9549142327326.jpg" alt="ULTIMATE ALLURE">
+  <div class="product-card-content">
+    <h3>ULTIMATE ALLURE</h3>
+    <p>2-piece CHANEL makeup set with concentrated pigments.</p>
+    <div class="product-price">5400€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 23 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/w_0.38,h_0.38,c_crop/f_auto,w_512,h_512/rouge-allure-l-extrait-limited-edition-high-intensity-lip-colour-concentrated-radiance-and-care-refillable-947-nuit-pourpre-0-07oz--packshot-default-163947-9548737740830.jpg" alt="ROUGE ALLURE L'EXTRAIT">
+  <div class="product-card-content">
+    <h3>ROUGE ALLURE L'EXTRAIT</h3>
+    <p>High-intensity lip colour with radiant finish and care formula.</p>
+    <div class="product-price">6700€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 24 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/w_0.43,h_0.43,c_crop/f_auto,w_512,h_512/noir-allure-mascara-10-noir-0-21oz--packshot-default-190010-9556363542558.jpg" alt="NOIR ALLURE">
+  <div class="product-card-content">
+    <h3>NOIR ALLURE</h3>
+    <p>All-in-one mascara for volume, curl, length and definition.</p>
+    <div class="product-price">3600€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+<!-- Product 25 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_one//w_0.91,h_0.91,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_480//la-routine-manucure-de-chanel-l-huile-camelia-le-vernis-111-ballerina-la-creme-main-1pce-packshot-default-100843-9557567602718.jpg" alt="LA ROUTINE MANUCURE DE CHANEL">
+  <div class="product-card-content">
+    <h3>LA ROUTINE MANUCURE DE CHANEL</h3>
+    <p>Complete luxury manicure set for nourished and elegant nails.</p>
+    <div class="product-price">5950€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 26 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.50,h_0.50,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/sublimage-l-extrait-de-nuit-ultimate-repair-night-concentrate-1fl-oz--packshot-default-144870-9536294256670.jpg" alt="SUBLIMAGE L’EXTRAIT DE NUIT">
+  <div class="product-card-content">
+    <h3>SUBLIMAGE L’EXTRAIT DE NUIT</h3>
+    <p>Ultimate night repair concentrate for smooth and radiant skin.</p>
+    <div class="product-price">9250€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 27 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_one//w_0.63,h_0.63,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_480//la-mousse-anti-pollution-cleansing-cream-to-foam-5fl-oz--packshot-default-141450-8845081378846.jpg" alt="LA MOUSSE">
+  <div class="product-card-content">
+    <h3>LA MOUSSE</h3>
+    <p>Gentle anti-pollution cleansing cream-to-foam by CHANEL.</p>
+    <div class="product-price">1950€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 28 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one//w_0.43,h_0.43,c_crop/q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/le-lift-creme-de-nuit-smoothing-and-firming-night-cream-1-7oz--packshot-default-141760-8845084491806.jpg" alt="LE LIFT CRÈME DE NUIT">
+  <div class="product-card-content">
+    <h3>LE LIFT CRÈME DE NUIT</h3>
+    <p>Smoothing and firming night cream for visibly refined skin.</p>
+    <div class="product-price">450€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 29 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images//t_one///q_auto:good,f_autoplus,fl_lossy,dpr_1.1/w_840/j12-watch-caliber-12-1-38-mm-black-black-ceramic-steel-packshot-default-h5697-8825157451806.jpg" alt="J12 Watch Caliber">
+  <div class="product-card-content">
+    <h3>J12 Watch Caliber</h3>
+    <p>Iconic CHANEL J12 watch in black ceramic and steel.</p>
+    <div class="product-price">4900€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 30 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_480//enchanted-night-eyeshadow-and-blush-palette-0-42oz--packshot-default-151367-9545700147230.jpg" alt="ENCHANTED NIGHT">
+  <div class="product-card-content">
+    <h3>ENCHANTED NIGHT</h3>
+    <p>Limited edition CHANEL palette of eyeshadow and blush.</p>
+    <div class="product-price">2250€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 31 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_480//bleu-de-chanel-fragranced-hair-care-3-2fl-oz--packshot-default-107980-9550221541406.jpg" alt="BLEU DE CHANEL">
+  <div class="product-card-content">
+    <h3>BLEU DE CHANEL</h3>
+    <p>Fragranced hair care spray offering a touch of BLEU DE CHANEL.</p>
+    <div class="product-price">1150€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Product 32 -->
+<div class="product-card">
+  <img src="https://www.chanel.com/images/t_one//w_0.51,h_0.51,c_crop/q_auto:good,f_auto,fl_lossy,dpr_1.1/w_480//platinum-egoiste-eau-de-toilette-spray-3-4fl-oz--packshot-default-124460-9539146547230.jpg" alt="PLATINUM ÉGOÏSTE">
+  <div class="product-card-content">
+    <h3>PLATINUM ÉGOÏSTE</h3>
+    <p>Masculine eau de toilette with fresh aromatic notes.</p>
+    <div class="product-price">500€</div>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+</div>
+
+</div>
+</section>
+
+
+
+    <!-- ===================== BACK TO TOP BUTTON ===================== -->
+    <button class="back-to-top" id="backToTopBtn">&#8679;</button>
+
+    <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Animation
+    gsap.from(".hero-content h1", {
+        opacity: 0,
+        y: -40,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".hero-content p", {
+        opacity: 0,
+        y: 20,
+        delay: 0.2,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".lux-btn", {
+    opacity: 0,
+    y: 30,
+    delay: 0.4,
+    duration: 1,
+    ease: "power3.out",
+    onComplete: () => gsap.set(".lux-btn", { clearProps: "all" })   // 👈 fixes glitch
+});
+
+
+    // Product Grid Animation
+    gsap.from(".product-card", {
+        scrollTrigger: {
+            trigger: ".product-grid",
+            start: "top 85%"
+        },
+        opacity: 0,
+        scale: 0.8,
+        y: 30,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+
+    // Back to Top Button
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = 'block';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    });
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Add to Cart
+    const cartIcon = document.querySelector('.cart-icon');
+    const cart = document.createElement('div');
+    cart.style.position = 'fixed';
+    cart.style.top = '70px';
+    cart.style.right = '-350px';
+    cart.style.width = '300px';
+    cart.style.background = '#111';
+    cart.style.padding = '15px';
+    cart.style.borderRadius = '10px';
+    cart.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+    cart.style.zIndex = '10000';
+    cart.style.transition = 'right 0.4s ease';
+    cart.innerHTML = `
+        <h4 style="color:#E5C07B; text-align:center;">🛒 Your Cart</h4>
+        <ul class="cart-list" style="list-style:none; padding:10px 0;"></ul>
+        <div style="text-align:center;">
+            <button class="checkout-btn" style="margin-top:10px;background:green;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Checkout</button>
+            <button class="close-cart" style="margin-top:10px;background:red;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Close</button>
+        </div>
+    `;
+    document.body.appendChild(cart);
+
+    cartIcon.addEventListener('click', () => {
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+    });
+    cart.querySelector('.close-cart').addEventListener('click', () => {
+        gsap.to(cart, { right: '-350px', duration: 0.4 });
+    });
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
+        const card = button.closest('.product-card');
+        const title = card.querySelector('h3').textContent;
+        const price = card.querySelector('.product-price').textContent;
+        const imageSrc = card.querySelector('img').src;
+
+        const cartList = cart.querySelector('.cart-list');
+
+        // ✅ Check if product already exists in cart
+        let existingItem = Array.from(cartList.children).find(li =>
+            li.querySelector('.cart-title')?.textContent === title
+        );
+
+        if (existingItem) {
+            // ✅ Increase quantity if item already exists
+            let qtyElem = existingItem.querySelector('.item-qty');
+            qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
+            updateLocalStorageCart();
+        } else {
+            // ✅ Create new cart item
+            const cartItem = document.createElement('li');
+            cartItem.style.display = 'flex';
+            cartItem.style.alignItems = 'center';
+            cartItem.style.marginBottom = '10px';
+            cartItem.innerHTML = `
+                <img src="${imageSrc}" style="width:50px;height:50px;object-fit:cover;margin-right:10px;border-radius:5px;">
+                <div>
+                    <p class="cart-title" style="margin:0;font-size:14px;color:#fff;">${title}</p>
+                    <p style="margin:0;font-size:12px;color:#aaa;">${price}</p>
+                    <p style="margin:0;font-size:12px;color:#E5C07B;">Qty: <span class="item-qty">1</span></p>
+                </div>
+                <button class="remove-btn" style="margin-left:auto;color:red;background:none;border:none;font-size:18px;cursor:pointer;">&#10005;</button>
+            `;
+            cartList.appendChild(cartItem);
+
+            gsap.from(cartItem, { opacity: 0, x: 50, duration: 0.5 });
+            updateLocalStorageCart();
+        }
+
+        // ✅ Always open cart when adding
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+
+        // ✅ Attach remove button logic with quantity check
+        cart.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.onclick = function() {
+                const item = btn.closest('li');
+                const qtyElem = item.querySelector('.item-qty');
+                const qty = parseInt(qtyElem.textContent);
+
+                if (qty > 1) {
+                    qtyElem.textContent = qty - 1;  // reduce qty
+                } else {
+                    item.remove();  // remove item if qty = 1
+                }
+                updateLocalStorageCart();
+            };
+
+        });
+    });
+});
+
+// ✅ Save cart to localStorage
+function updateLocalStorageCart() {
+    const cartItems = [];
+    document.querySelectorAll('.cart-list li').forEach(item => {
+        cartItems.push({
+            title: item.querySelector('.cart-title').textContent,
+            price: item.querySelector('p:nth-of-type(2)').textContent,
+            image: item.querySelector('img').src,
+            quantity: item.querySelector('.item-qty').textContent
+        });
+    });
+    localStorage.setItem('pradaCart', JSON.stringify(cartItems));
+}
+
+
+
+    // Checkout Button Action (for example, show alert)
+   cart.querySelector('.checkout-btn').addEventListener('click', () => {
+    window.location.href = 'checkout.html'; // 👈 opens checkout page instead of alert
+});
+
+   
+// ===================== FLOATING CART BUTTON =====================
+// const floatingCartBtn = document.createElement('div');
+// floatingCartBtn.id = 'floating-cart';
+// floatingCartBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i>';   // ✅ Correct icon
+// document.body.appendChild(floatingCartBtn);
+
+// // Style (matches luxury theme & fixes your issue)
+// const floatingStyle = floatingCartBtn.style;
+// floatingStyle.position = 'fixed';
+// floatingStyle.top = '80px';                                       // ✅ Slightly lower (looks better)
+// floatingStyle.right = '20px';
+// floatingStyle.backgroundColor = '#E5C07B';
+// floatingStyle.color = '#000';
+// floatingStyle.width = '55px';                                     // ✅ Fixed width
+// floatingStyle.height = '55px';                                    // ✅ Fixed height
+// floatingStyle.display = 'flex';
+// floatingStyle.alignItems = 'center';
+// floatingStyle.justifyContent = 'center';
+// floatingStyle.fontSize = '22px';                                  // ✅ Bigger icon
+// floatingStyle.borderRadius = '50%';
+// floatingStyle.cursor = 'pointer';
+// floatingStyle.boxShadow = '0 4px 10px rgba(0,0,0,0.5)';
+// floatingStyle.zIndex = '10000';
+// floatingStyle.transition = 'all 0.3s ease';
+// floatingStyle.display = 'none';
+
+// // Hover effect (luxury style)
+// floatingCartBtn.addEventListener('mouseover', () => {
+//     floatingCartBtn.style.transform = 'scale(1.1)';
+// });
+// floatingCartBtn.addEventListener('mouseout', () => {
+//     floatingCartBtn.style.transform = 'scale(1)';
+// });
+
+// // Show/Hide on scroll past #collection
+// window.addEventListener('scroll', () => {
+//     const collectionSection = document.querySelector('#collection');
+//     if (!collectionSection) return;
+//     const collectionTop = collectionSection.offsetTop;
+//     const scrollY = window.scrollY || window.pageYOffset;
+
+//     if (scrollY >= collectionTop) {
+//         floatingCartBtn.style.display = 'flex';                    // ✅ Use flex (not block)
+//     } else {
+//         floatingCartBtn.style.display = 'none';
+//     }
+// });
+
+// // Link floating cart button to open your cart
+// floatingCartBtn.addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+// // ALSO: Link navbar cart icon to same cart
+// document.querySelector('.cart-icon').addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+    </script>
+
+</body>
+</html>
+
+
+            <!-- You can continue with your remaining 29 products here in the same format -->

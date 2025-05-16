@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>LOUIS VUITTON | Luxury Redefined</title>
+
+    <!-- Fonts + Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Didot&family=Helvetica+Neue&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap + GSAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <style>
+        /* Luxury Global Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { scroll-behavior: smooth; }
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #000;
+            color: #F8F8F8;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Navbar */
+        .lux-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            border-bottom: 1px solid #E5C07B;
+        }
+        .lux-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+        .logo {
+            font-family: 'Didot', serif;
+            font-size: 2.5rem;
+            color: #E5C07B;
+            text-decoration: none;
+        }
+        .lux-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        .lux-menu li a {
+            color: #F8F8F8;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        .lux-menu li a:hover {
+            color: #E5C07B;
+        }
+        .lux-icons i {
+            font-size: 1.2rem;
+            color: #F8F8F8;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .lux-icons i:hover {
+            color: #E5C07B;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .hero-bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('/public/img17.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4);
+            z-index: -2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        .hero-content h1 {
+            font-family: 'Didot', serif;
+            font-size: 5rem;
+            color: #E5C07B;
+            margin-bottom: 20px;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        .lux-btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border: 2px solid #E5C07B;
+            color: #E5C07B;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+        .lux-btn:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .lux-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .lux-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1rem; }
+        }
+                /* ========================
+           Product Grid + Cards
+        ======================== */
+        #collection {
+            padding: 100px 0;
+            background-color: #000;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Didot', serif;
+            color: #E5C07B;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+        }
+
+        .product-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background-color: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .product-card-content h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .product-card-content p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #E5C07B;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .add-to-cart {
+            background-color: transparent;
+            color: #E5C07B;
+            border: 2px solid #E5C07B;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        .add-to-cart:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        @media(max-width: 768px){
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 20px;
+            }
+        }
+        .cart-button {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  background-color: #ff6f61;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.cart-button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cart-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#floating-cart i {
+    font-size: 20px;
+}
+#floating-cart:hover {
+    background-color: #C9A94A;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+    </style>
+</head>
+<body class="dark-mode">
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="lux-navbar">
+        <div class="lux-container">
+            <a href="#" class="logo">LOUIS VUITTON</a>
+            <ul class="lux-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="lux-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-user"></i>
+                <i class="fas fa-shopping-bag cart-icon"></i>
+            </div>
+           
+
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>LOUIS VUITTON</h1>
+            <p>Redefining Luxury</p>
+            <a href="#collection" class="lux-btn">Discover The Collection</a>
+        </div>
+        <div class="hero-bg-image"></div>
+    </section>
+
+    <!-- ===================== PRODUCT GRID START ===================== -->
+    <section id="collection">
+    <h2 class="section-title">Exclusive Collection</h2>
+    <div class="product-grid">
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-diane--M45985_PM2_Front%20view.png?wid=1090&hei=1090" alt="Diane">
+            <div class="product-card-content">
+                <h3>Diane</h3>
+                <p>Luxury Louis Vuitton Diane handbag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-boulogne---M45831_PM2_Front%20view.png?wid=1090&hei=1090" alt="Boulogne">
+            <div class="product-card-content">
+                <h3>Boulogne</h3>
+                <p>Louis Vuitton Boulogne shoulder bag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-nano-speedy-dating--M13226_PM2_Front%20view.png?wid=1090&hei=1090" alt="Nano Speedy Dating">
+            <div class="product-card-content">
+                <h3>Nano Speedy Dating</h3>
+                <p>Chic Louis Vuitton Nano Speedy Dating bag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-nano-madeleine--M12145_PM2_Front%20view.png?wid=1090&hei=1090" alt="Nano Madeleine">
+            <div class="product-card-content">
+                <h3>Nano Madeleine</h3>
+                <p>Stylish Louis Vuitton Nano Madeleine handbag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-neverfull-inside-out-mm--M12061_PM2_Front%20view.png?wid=1090&hei=1090" alt="Neverfull Inside Out MM">
+            <div class="product-card-content">
+                <h3>Neverfull Inside Out MM</h3>
+                <p>Elegant Louis Vuitton Neverfull MM tote.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lock-and-walk--M24638_PM2_Front%20view.png?wid=1090&hei=1090" alt="Lock and Walk">
+            <div class="product-card-content">
+                <h3>Lock and Walk</h3>
+                <p>Louis Vuitton Lock and Walk luxury bag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-backup--M47072_PM2_Front%20view.png?wid=1090&hei=1090" alt="Backup">
+            <div class="product-card-content">
+                <h3>Backup</h3>
+                <p>Minimal Louis Vuitton Backup backpack.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-pochette-metis-backpack--M11941_PM2_Front%20view.png?wid=1090&hei=1090" alt="Pochette Métis Backpack">
+            <div class="product-card-content">
+                <h3>Pochette Métis Backpack</h3>
+                <p>Classic Louis Vuitton Pochette Métis backpack.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+                <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-onthego-bb--M47054_PM2_Front%20view.png?wid=1090&hei=1090" alt="OnTheGo BB">
+            <div class="product-card-content">
+                <h3>OnTheGo BB</h3>
+                <p>Iconic Louis Vuitton OnTheGo BB tote bag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-vanity-pm--M25123_PM2_Front%20view.png?wid=1090&hei=1090" alt="Vanity PM">
+            <div class="product-card-content">
+                <h3>Vanity PM</h3>
+                <p>Luxurious Louis Vuitton Vanity PM handbag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bandouliere--J02493_PM2_Front%20view.png?wid=1090&hei=1090" alt="Bandoulière">
+            <div class="product-card-content">
+                <h3>Bandoulière</h3>
+                <p>Timeless Louis Vuitton Bandoulière shoulder strap.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-adjustable-shoulder-strap--J00276_PM2_Front%20view.png?wid=1090&hei=1090" alt="Adjustable Shoulder Strap">
+            <div class="product-card-content">
+                <h3>Adjustable Shoulder Strap</h3>
+                <p>Adjustable Louis Vuitton premium shoulder strap.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-keepall-bandouliere-35--M46655_PM2_Front%20view.png?wid=1090&hei=1090" alt="Keepall Bandoulière 35">
+            <div class="product-card-content">
+                <h3>Keepall Bandoulière 35</h3>
+                <p>Louis Vuitton Keepall Bandoulière travel bag 35.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-keepall-bandouliere-25--M12684_PM2_Front%20view.png?wid=1090&hei=1090" alt="Keepall Bandoulière 25">
+            <div class="product-card-content">
+                <h3>Keepall Bandoulière 25</h3>
+                <p>Compact Louis Vuitton Keepall Bandoulière 25 bag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-pulse-wearable-wallet--M12618_PM2_Front%20view.png?wid=1090&hei=1090" alt="Pulse Wearable Wallet">
+            <div class="product-card-content">
+                <h3>Pulse Wearable Wallet</h3>
+                <p>Trendy Louis Vuitton Pulse wearable wallet.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-georges-tote-mm--M11664_PM2_Front%20view.png?wid=1090&hei=1090" alt="Georges Tote MM">
+            <div class="product-card-content">
+                <h3>Georges Tote MM</h3>
+                <p>Classic Louis Vuitton Georges Tote MM luxury bag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-christopher-mm--M43735_PM2_Front%20view.png?wid=1090&hei=1090" alt="Christopher MM">
+            <div class="product-card-content">
+                <h3>Christopher MM</h3>
+                <p>Bold Louis Vuitton Christopher MM backpack.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-discovery-backpack-pm--M12463_PM2_Front%20view.png?wid=1090&hei=1090" alt="Discovery Backpack PM">
+            <div class="product-card-content">
+                <h3>Discovery Backpack PM</h3>
+                <p>Modern Louis Vuitton Discovery PM backpack.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-avenue-slingbag--M11702_PM2_Front%20view.png?wid=1090&hei=1090" alt="Avenue Slingbag">
+            <div class="product-card-content">
+                <h3>Avenue Slingbag</h3>
+                <p>Trendy Louis Vuitton Avenue slingbag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-takeoff-briefcase--M59159_PM2_Front%20view.png?wid=1090&hei=1090" alt="Takeoff Briefcase">
+            <div class="product-card-content">
+                <h3>Takeoff Briefcase</h3>
+                <p>Elegant Louis Vuitton Takeoff briefcase bag.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-porte-document-voyage-pm--M21340_PM2_Front%20view.png?wid=1090&hei=1090" alt="Porte Document Voyage PM">
+            <div class="product-card-content">
+                <h3>Porte Document Voyage PM</h3>
+                <p>Louis Vuitton Porte Document Voyage PM case.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-attrape-reves--LP0083_PM2_Front%20view.png?wid=1090&hei=1090" alt="Attrape-Rêves">
+            <div class="product-card-content">
+                <h3>Attrape-Rêves</h3>
+                <p>Captivating Louis Vuitton Attrape-Rêves fragrance.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-ombre-nomade--LP0095_PM2_Front%20view.png?wid=1090&hei=1090" alt="Ombre Nomade">
+            <div class="product-card-content">
+                <h3>Ombre Nomade</h3>
+                <p>Exclusive Louis Vuitton Ombre Nomade perfume.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-fleur-du-desert---LP0287_PM2_Front%20view.png?wid=1090&hei=1090" alt="Fleur du Désert">
+            <div class="product-card-content">
+                <h3>Fleur du Désert</h3>
+                <p>Chic Louis Vuitton Fleur du Désert perfume.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-pacific-chill---LP0326_PM2_Front%20view.png?wid=1090&hei=1090" alt="Pacific Chill">
+            <div class="product-card-content">
+                <h3>Pacific Chill</h3>
+                <p>Refreshing Louis Vuitton Pacific Chill fragrance.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-stellar-times--LP0242_PM2_Front%20view.png?wid=1090&hei=1090" alt="Stellar Times">
+            <div class="product-card-content">
+                <h3>Stellar Times</h3>
+                <p>Exclusive Louis Vuitton Stellar Times perfume.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-dimension-40mm-reversible-belt--M8845U_PM2_Front%20view.png?wid=1090&hei=1090" alt="LV Dimension 40mm Reversible Belt">
+            <div class="product-card-content">
+                <h3>LV Dimension 40mm Reversible Belt</h3>
+                <p>Premium Louis Vuitton Dimension reversible belt.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-heritage-35mm-reversible-belt--M8717V_PM2_Front%20view.png?wid=1090&hei=1090" alt="LV Heritage 35mm Reversible Belt">
+            <div class="product-card-content">
+                <h3>LV Heritage 35mm Reversible Belt</h3>
+                <p>Classic Louis Vuitton Heritage reversible belt.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-rodeo-40mm-reversible-belt--M8727U_PM2_Front%20view.png?wid=1090&hei=1090" alt="LV Rodeo 40mm Reversible Belt">
+            <div class="product-card-content">
+                <h3>LV Rodeo 40mm Reversible Belt</h3>
+                <p>Refined Louis Vuitton Rodeo reversible belt.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-initiales-taurillon-40mm-reversible-belt--M0532T_PM2_Front%20view.png?wid=1090&hei=1090" alt="LV Initiales Taurillon 40mm Reversible Belt">
+            <div class="product-card-content">
+                <h3>LV Initiales Taurillon 40mm Reversible Belt</h3>
+                <p>Luxurious Louis Vuitton Initiales reversible belt.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-mega-pixel-40mm-reversible-belt--M8470V_PM2_Front%20view.png?wid=1090&hei=1090" alt="LV Mega Pixel 40mm Reversible Belt">
+            <div class="product-card-content">
+                <h3>LV Mega Pixel 40mm Reversible Belt</h3>
+                <p>Modern Louis Vuitton Mega Pixel reversible belt.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://in.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-optic-40mm-reversible-belt--M8512S_PM2_Front%20view.png?wid=1090&hei=1090" alt="LV Optic 40mm Reversible Belt">
+            <div class="product-card-content">
+                <h3>LV Optic 40mm Reversible Belt</h3>
+                <p>Stylish Louis Vuitton Optic reversible belt.</p>
+                <div class="product-price">$150</div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+    </div> <!-- end of product-grid -->
+</section> <!-- end of collection section -->
+
+
+
+    <!-- ===================== BACK TO TOP BUTTON ===================== -->
+    <button class="back-to-top" id="backToTopBtn">&#8679;</button>
+
+    <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Animation
+    gsap.from(".hero-content h1", {
+        opacity: 0,
+        y: -40,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".hero-content p", {
+        opacity: 0,
+        y: 20,
+        delay: 0.2,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".lux-btn", {
+    opacity: 0,
+    y: 30,
+    delay: 0.4,
+    duration: 1,
+    ease: "power3.out",
+    onComplete: () => gsap.set(".lux-btn", { clearProps: "all" })   // 👈 fixes glitch
+});
+
+
+    // Product Grid Animation
+    gsap.from(".product-card", {
+        scrollTrigger: {
+            trigger: ".product-grid",
+            start: "top 85%"
+        },
+        opacity: 0,
+        scale: 0.8,
+        y: 30,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+
+    // Back to Top Button
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = 'block';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    });
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Add to Cart
+    const cartIcon = document.querySelector('.cart-icon');
+    const cart = document.createElement('div');
+    cart.style.position = 'fixed';
+    cart.style.top = '70px';
+    cart.style.right = '-350px';
+    cart.style.width = '300px';
+    cart.style.background = '#111';
+    cart.style.padding = '15px';
+    cart.style.borderRadius = '10px';
+    cart.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+    cart.style.zIndex = '10000';
+    cart.style.transition = 'right 0.4s ease';
+    cart.innerHTML = `
+        <h4 style="color:#E5C07B; text-align:center;">🛒 Your Cart</h4>
+        <ul class="cart-list" style="list-style:none; padding:10px 0;"></ul>
+        <div style="text-align:center;">
+            <button class="checkout-btn" style="margin-top:10px;background:green;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Checkout</button>
+            <button class="close-cart" style="margin-top:10px;background:red;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Close</button>
+        </div>
+    `;
+    document.body.appendChild(cart);
+
+    cartIcon.addEventListener('click', () => {
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+    });
+    cart.querySelector('.close-cart').addEventListener('click', () => {
+        gsap.to(cart, { right: '-350px', duration: 0.4 });
+    });
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
+        const card = button.closest('.product-card');
+        const title = card.querySelector('h3').textContent;
+        const price = card.querySelector('.product-price').textContent;
+        const imageSrc = card.querySelector('img').src;
+
+        const cartList = cart.querySelector('.cart-list');
+
+        // ✅ Check if product already exists in cart
+        let existingItem = Array.from(cartList.children).find(li =>
+            li.querySelector('.cart-title')?.textContent === title
+        );
+
+        if (existingItem) {
+            // ✅ Increase quantity if item already exists
+            let qtyElem = existingItem.querySelector('.item-qty');
+            qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
+            updateLocalStorageCart();
+        } else {
+            // ✅ Create new cart item
+            const cartItem = document.createElement('li');
+            cartItem.style.display = 'flex';
+            cartItem.style.alignItems = 'center';
+            cartItem.style.marginBottom = '10px';
+            cartItem.innerHTML = `
+                <img src="${imageSrc}" style="width:50px;height:50px;object-fit:cover;margin-right:10px;border-radius:5px;">
+                <div>
+                    <p class="cart-title" style="margin:0;font-size:14px;color:#fff;">${title}</p>
+                    <p style="margin:0;font-size:12px;color:#aaa;">${price}</p>
+                    <p style="margin:0;font-size:12px;color:#E5C07B;">Qty: <span class="item-qty">1</span></p>
+                </div>
+                <button class="remove-btn" style="margin-left:auto;color:red;background:none;border:none;font-size:18px;cursor:pointer;">&#10005;</button>
+            `;
+            cartList.appendChild(cartItem);
+
+            gsap.from(cartItem, { opacity: 0, x: 50, duration: 0.5 });
+            updateLocalStorageCart();
+        }
+
+        // ✅ Always open cart when adding
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+
+        // ✅ Attach remove button logic with quantity check
+        cart.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.onclick = function() {
+                const item = btn.closest('li');
+                const qtyElem = item.querySelector('.item-qty');
+                const qty = parseInt(qtyElem.textContent);
+
+                if (qty > 1) {
+                    qtyElem.textContent = qty - 1;  // reduce qty
+                } else {
+                    item.remove();  // remove item if qty = 1
+                }
+                updateLocalStorageCart();
+            };
+
+        });
+    });
+});
+
+// ✅ Save cart to localStorage
+function updateLocalStorageCart() {
+    const cartItems = [];
+    document.querySelectorAll('.cart-list li').forEach(item => {
+        cartItems.push({
+            title: item.querySelector('.cart-title').textContent,
+            price: item.querySelector('p:nth-of-type(2)').textContent,
+            image: item.querySelector('img').src,
+            quantity: item.querySelector('.item-qty').textContent
+        });
+    });
+    localStorage.setItem('pradaCart', JSON.stringify(cartItems));
+}
+
+
+
+    // Checkout Button Action (for example, show alert)
+   cart.querySelector('.checkout-btn').addEventListener('click', () => {
+    window.location.href = 'checkout.html'; // 👈 opens checkout page instead of alert
+});
+
+   
+// ===================== FLOATING CART BUTTON =====================
+// const floatingCartBtn = document.createElement('div');
+// floatingCartBtn.id = 'floating-cart';
+// floatingCartBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i>';   // ✅ Correct icon
+// document.body.appendChild(floatingCartBtn);
+
+// // Style (matches luxury theme & fixes your issue)
+// const floatingStyle = floatingCartBtn.style;
+// floatingStyle.position = 'fixed';
+// floatingStyle.top = '80px';                                       // ✅ Slightly lower (looks better)
+// floatingStyle.right = '20px';
+// floatingStyle.backgroundColor = '#E5C07B';
+// floatingStyle.color = '#000';
+// floatingStyle.width = '55px';                                     // ✅ Fixed width
+// floatingStyle.height = '55px';                                    // ✅ Fixed height
+// floatingStyle.display = 'flex';
+// floatingStyle.alignItems = 'center';
+// floatingStyle.justifyContent = 'center';
+// floatingStyle.fontSize = '22px';                                  // ✅ Bigger icon
+// floatingStyle.borderRadius = '50%';
+// floatingStyle.cursor = 'pointer';
+// floatingStyle.boxShadow = '0 4px 10px rgba(0,0,0,0.5)';
+// floatingStyle.zIndex = '10000';
+// floatingStyle.transition = 'all 0.3s ease';
+// floatingStyle.display = 'none';
+
+// // Hover effect (luxury style)
+// floatingCartBtn.addEventListener('mouseover', () => {
+//     floatingCartBtn.style.transform = 'scale(1.1)';
+// });
+// floatingCartBtn.addEventListener('mouseout', () => {
+//     floatingCartBtn.style.transform = 'scale(1)';
+// });
+
+// // Show/Hide on scroll past #collection
+// window.addEventListener('scroll', () => {
+//     const collectionSection = document.querySelector('#collection');
+//     if (!collectionSection) return;
+//     const collectionTop = collectionSection.offsetTop;
+//     const scrollY = window.scrollY || window.pageYOffset;
+
+//     if (scrollY >= collectionTop) {
+//         floatingCartBtn.style.display = 'flex';                    // ✅ Use flex (not block)
+//     } else {
+//         floatingCartBtn.style.display = 'none';
+//     }
+// });
+
+// // Link floating cart button to open your cart
+// floatingCartBtn.addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+// // ALSO: Link navbar cart icon to same cart
+// document.querySelector('.cart-icon').addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+    </script>
+
+</body>
+</html>
+
+
+            <!-- You can continue with your remaining 29 products here in the same format -->

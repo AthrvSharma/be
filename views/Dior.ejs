@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>DIOR | Luxury Redefined</title>
+
+    <!-- Fonts + Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Didot&family=Helvetica+Neue&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap + GSAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <style>
+        /* Luxury Global Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { scroll-behavior: smooth; }
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #000;
+            color: #F8F8F8;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Navbar */
+        .lux-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            border-bottom: 1px solid #E5C07B;
+        }
+        .lux-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+        .logo {
+            font-family: 'Didot', serif;
+            font-size: 2.5rem;
+            color: #E5C07B;
+            text-decoration: none;
+        }
+        .lux-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        .lux-menu li a {
+            color: #F8F8F8;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        .lux-menu li a:hover {
+            color: #E5C07B;
+        }
+        .lux-icons i {
+            font-size: 1.2rem;
+            color: #F8F8F8;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .lux-icons i:hover {
+            color: #E5C07B;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .hero-bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('/public/img17.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4);
+            z-index: -2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        .hero-content h1 {
+            font-family: 'Didot', serif;
+            font-size: 5rem;
+            color: #E5C07B;
+            margin-bottom: 20px;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        .lux-btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border: 2px solid #E5C07B;
+            color: #E5C07B;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+        .lux-btn:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .lux-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .lux-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1rem; }
+        }
+                /* ========================
+           Product Grid + Cards
+        ======================== */
+        #collection {
+            padding: 100px 0;
+            background-color: #000;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Didot', serif;
+            color: #E5C07B;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+        }
+
+        .product-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background-color: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .product-card-content h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .product-card-content p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #E5C07B;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .add-to-cart {
+            background-color: transparent;
+            color: #E5C07B;
+            border: 2px solid #E5C07B;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        .add-to-cart:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        @media(max-width: 768px){
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 20px;
+            }
+        }
+        .cart-button {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  background-color: #ff6f61;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.cart-button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cart-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#floating-cart i {
+    font-size: 20px;
+}
+#floating-cart:hover {
+    background-color: #C9A94A;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+    </style>
+</head>
+<body class="dark-mode">
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="lux-navbar">
+        <div class="lux-container">
+            <a href="#" class="logo">DIOR</a>
+            <ul class="lux-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="lux-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-user"></i>
+                <i class="fas fa-shopping-bag cart-icon"></i>
+            </div>
+           
+
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>DIOR</h1>
+            <p>Redefining Luxury</p>
+            <a href="#collection" class="lux-btn">Discover The Collection</a>
+        </div>
+        <div class="hero-bg-image"></div>
+    </section>
+
+    <!-- ===================== PRODUCT GRID START ===================== -->
+   <section id="collection">
+  <h2 class="section-title">Exclusive Collection</h2>
+  <div class="product-grid">
+
+    <!-- Product 1 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/E1520PTCRSD301_E01?$default_GHC$&crop=253,650,1495,872&bfc=on&qlt=85" alt="Petit CD Earrings">
+      <div class="product-card-content">
+        <h3>Petit CD Earrings</h3>
+        <p>Elegant gold-finish earrings with a sparkling touch.</p>
+        <div class="product-price">5500€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/R1009DVOCYD301_E03?$default_GHC$&crop=714,895,561,660&bfc=on&qlt=85" alt="Dio(r)evolution Ring">
+      <div class="product-card-content">
+        <h3>Dio(r)evolution Ring</h3>
+        <p>Signature Dior ring featuring modern and timeless design.</p>
+        <div class="product-price">560€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/B1133PMTCYD301_E01?$default_GHC$&crop=435,325,1120,1191&bfc=on&qlt=85" alt="Petit CD Double Bracelet">
+      <div class="product-card-content">
+        <h3>Petit CD Double Bracelet</h3>
+        <p>Double row bracelet embellished with delicate charms.</p>
+        <div class="product-price">1300€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/KCK250DJES62K_E03?$default_GHC$&crop=380,835,1240,743&bfc=on&qlt=8" alt="Walk'n'Dior Sneaker">
+      <div class="product-card-content">
+        <h3>Walk'n'Dior Sneaker</h3>
+        <p>Iconic Dior sneaker crafted in Dior Oblique embroidered canvas.</p>
+        <div class="product-price">450€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/S5573OWHPM51U_E01?$default_GHC$&crop=246,380,1500,1402&bfc=on&qlt=85" alt="Mini Dior Book Tote">
+      <div class="product-card-content">
+        <h3>Mini Dior Book Tote</h3>
+        <p>Signature mini tote bag embroidered with Dior motif.</p>
+        <div class="product-price">260€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/224G02AM309X5855_E01?$default_GHC$&crop=445,150,1110,1259&bfc=on&qlt=85" alt="Dior Marinière Cardigan">
+      <div class="product-card-content">
+        <h3>Dior Marinière Cardigan</h3>
+        <p>Elegant cardigan blending navy stripes with luxury knitwear.</p>
+        <div class="product-price">1990€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 7 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/B0446UWGAM911_E01-1?$default_GHC$&crop=0,1089,1904,467&bfc=on&qlt=85" alt="30 Montaigne Reversible Belt">
+      <div class="product-card-content">
+        <h3>30 Montaigne Reversible Belt</h3>
+        <p>Timeless belt crafted with reversible calfskin leather.</p>
+        <div class="product-price">1300€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 8 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/B0961ADRCOD22W_E01?$default_GHC$&crop=0,585,1880,906&bfc=on&qlt=85" alt="Christian Dior Bracelet Set">
+      <div class="product-card-content">
+        <h3>Christian Dior Bracelet Set</h3>
+        <p>Elegant set of Christian Dior bracelets with CD signature.</p>
+        <div class="product-price">1330€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+    <!-- Product 9 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/KCQ209UELS62K_E06?$default_GHC$&crop=291,144,1313,1479&bfc=on&qlt=85" alt="Dway Slide">
+      <div class="product-card-content">
+        <h3>Dway Slide</h3>
+        <p>Chic and casual Dway slide featuring Dior signature band.</p>
+        <div class="product-price">650€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 10 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/S2356UBPZM900_E01-2?$default_GHC$&crop=248,919,1372,900&bfc=on&qlt=85" alt="Miss Montaigne Mini Bag">
+      <div class="product-card-content">
+        <h3>Miss Montaigne Mini Bag</h3>
+        <p>Refined mini bag in smooth leather with signature clasp.</p>
+        <div class="product-price">820€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 11 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/224S09AM308X5800_E01?$default_GHC$&crop=365,148,1270,1355&bfc=on&qlt=85" alt="Christian Dior Short-Sleeved Sweater">
+      <div class="product-card-content">
+        <h3>Christian Dior Short-Sleeved Sweater</h3>
+        <p>Soft knit sweater blending modern silhouette with Dior elegance.</p>
+        <div class="product-price">1000€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 12 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/NSGTB1UXR10A0_E03?$default_GHC$&crop=69,809,1899,743&bfc=on&qlt=85" alt="DiorSignature B1U">
+      <div class="product-card-content">
+        <h3>DiorSignature B1U</h3>
+        <p>Stylish Dior sunglasses with ultra-light frame and modern flair.</p>
+        <div class="product-price">1840€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 13 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/S5573CTQRM981_E01?$default_GHC$&crop=60,403,1669,1394&bfc=on&qlt=85" alt="Mini Dior Book Tote">
+      <div class="product-card-content">
+        <h3>Mini Dior Book Tote</h3>
+        <p>Signature mini tote bag embroidered with Cannage motif.</p>
+        <div class="product-price">290€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 14 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/KCK211OBES56B_E03-1?$default_GHC$&crop=384,813,1232,764&bfc=on&qlt=85" alt="Walk'n'Dior Sneaker">
+      <div class="product-card-content">
+        <h3>Walk'n'Dior Sneaker</h3>
+        <p>Comfortable sneaker in canvas featuring Dior Oblique motif.</p>
+        <div class="product-price">2310€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 15 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/N1155PMTCYD301_E01?$default_GHC$&crop=456,163,1088,1382&bfc=on&qlt=85" alt="Petit CD Double Necklace">
+      <div class="product-card-content">
+        <h3>Petit CD Double Necklace</h3>
+        <p>Refined necklace with layered chains and CD initials.</p>
+        <div class="product-price">1340€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 16 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/B0422UWFPM900_E01?$default_GHC$&crop=0,988,1910,641&bfc=on&qlt=85" alt="30 Montaigne Belt">
+      <div class="product-card-content">
+        <h3>30 Montaigne Belt</h3>
+        <p>Elegant belt in smooth calfskin leather with gold CD buckle.</p>
+        <div class="product-price">3640€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+    <!-- Product 17 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/KDC200TFLS900_E03?$default_GHC$&crop=342,723,1315,790&bfc=on&qlt=85" alt="J'Adior Slingback Pump">
+      <div class="product-card-content">
+        <h3>J'Adior Slingback Pump</h3>
+        <p>Pointed-toe pump crafted in technical fabric with signature ribbon.</p>
+        <div class="product-price">1300€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 18 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/HYK02CWO0UC999_E01?$default_GHC$&crop=685,149,629,1580&bfc=on&qlt=85" alt="Whiskey Decanter">
+      <div class="product-card-content">
+        <h3>Whiskey Decanter</h3>
+        <p>Luxurious Dior whiskey decanter with elegant crystal design.</p>
+        <div class="product-price">2200€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 19 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/DCANS1UXRD0L6_E03?$default_GHC$&crop=51,701,1900,861&bfc=on&qlt=85" alt="DiorCannage S1U">
+      <div class="product-card-content">
+        <h3>DiorCannage S1U</h3>
+        <p>Oversized sunglasses with iconic Cannage motif temples.</p>
+        <div class="product-price">5200€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 20 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/S5907CNKOM928_E01?$default_GHC$&crop=201,697,1614,1099&bfc=on&qlt=85" alt="Medium Saddle Pouch with Chain">
+      <div class="product-card-content">
+        <h3>Medium Saddle Pouch with Chain</h3>
+        <p>Signature Saddle pouch with removable chain strap in calfskin.</p>
+        <div class="product-price">1980€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 21 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/3BO359ZDUH900_E03?$default_GHC$&crop=282,461,1434,1083&bfc=on&qlt=85" alt="Dior Embassy Chelsea Boot">
+      <div class="product-card-content">
+        <h3>Dior Embassy Chelsea Boot</h3>
+        <p>Classic Chelsea boot reimagined in Dior Oblique canvas and leather.</p>
+        <div class="product-price">970€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 22 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/1ESDU134YKYH03E_E01-2?$default_GHC$&crop=69,401,1847,1409&bfc=on&qlt=85" alt="Weekender 40">
+      <div class="product-card-content">
+        <h3>Weekender 40</h3>
+        <p>Spacious travel bag crafted in supple Dior Oblique canvas.</p>
+        <div class="product-price">2180€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 23 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/CD08352X1343_E01?$default_GHC$&crop=402,307,1010,1384&bfc=on&qlt=85" alt="Chiffre Rouge">
+      <div class="product-card-content">
+        <h3>Chiffre Rouge</h3>
+        <p>Stylish timepiece featuring bold design and luxury finish.</p>
+        <div class="product-price">430€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 24 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/3DE305ZKCH969_E03?$default_GHC$&crop=336,843,1328,691&bfc=on&qlt=85" alt="Dior Timeless Derby Shoe">
+      <div class="product-card-content">
+        <h3>Dior Timeless Derby Shoe</h3>
+        <p>Refined leather derby shoe with classic lines and craftsmanship.</p>
+        <div class="product-price">1200€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+    <!-- Product 25 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/1ESSH232YKYH27E_E01?$default_GHC$&crop=306,462,1291,1378&bfc=on&qlt=85" alt="East-West Tote Bag">
+      <div class="product-card-content">
+        <h3>East-West Tote Bag</h3>
+        <p>Spacious and elegant tote bag crafted in Dior Oblique canvas.</p>
+        <div class="product-price">540€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 26 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/2ESBC027CDIH00N_E01?$default_GHC$&crop=639,1178,728,625&bfc=on&qlt=85" alt="CD Icon Bifold Wallet">
+      <div class="product-card-content">
+        <h3>CD Icon Bifold Wallet</h3>
+        <p>Compact and luxurious wallet with CD signature logo.</p>
+        <div class="product-price">580€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 27 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/2ADCA435YKSH53E_E01?$default_GHC$&crop=311,977,1355,831&bfc=on&qlt=85" alt="Mini Saddle Messenger Bag with Flap">
+      <div class="product-card-content">
+        <h3>Mini Saddle Messenger Bag with Flap</h3>
+        <p>Iconic Saddle silhouette in compact size with adjustable strap.</p>
+        <div class="product-price">3210€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 28 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/413C914C6472C989_E03?$default_GHC$&crop=199,677,1366,753&bfc=on&qlt=85" alt="CD Icon Cap">
+      <div class="product-card-content">
+        <h3>CD Icon Cap</h3>
+        <p>Contemporary baseball cap with CD logo embroidery.</p>
+        <div class="product-price">1290€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 29 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/44E0001A1018C180_E01?$default_GHC$&crop=692,150,616,1727&bfc=on&qlt=85" alt="Striped Cannage Scarf">
+      <div class="product-card-content">
+        <h3>Striped Cannage Scarf</h3>
+        <p>Luxurious silk scarf with signature Dior Cannage motif.</p>
+        <div class="product-price">5500€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 30 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/JMYD95033_SBG_E01-1?$no_transfo_lookshot_default_GHC$&bfc=on&qlt=85" alt="My Dior Bracelet">
+      <div class="product-card-content">
+        <h3>My Dior Bracelet</h3>
+        <p>Delicate bracelet with Dior charms and adjustable clasp.</p>
+        <div class="product-price">510€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 31 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/S2381UTZQM928_E01?$default_GHC$&crop=304,156,1394,1692&bfc=on&qlt=85" alt="30 Montaigne Cigale Mini Bag">
+      <div class="product-card-content">
+        <h3>30 Montaigne Cigale Mini Bag</h3>
+        <p>Refined mini bag with signature 30 Montaigne clasp.</p>
+        <div class="product-price">1200€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 32 -->
+    <div class="product-card">
+      <img src="https://assets.christiandior.com/is/image/diorprod/S5169UBXPM01E_E01?$default_GHC$&crop=321,866,1359,925&bfc=on&qlt=85" alt="Miss Caro Mini Bag">
+      <div class="product-card-content">
+        <h3>Miss Caro Mini Bag</h3>
+        <p>Chic quilted mini bag with signature CD twist clasp.</p>
+        <div class="product-price">5430€</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+</div>
+</section>
+
+
+
+    <!-- ===================== BACK TO TOP BUTTON ===================== -->
+    <button class="back-to-top" id="backToTopBtn">&#8679;</button>
+
+    <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Animation
+    gsap.from(".hero-content h1", {
+        opacity: 0,
+        y: -40,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".hero-content p", {
+        opacity: 0,
+        y: 20,
+        delay: 0.2,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".lux-btn", {
+    opacity: 0,
+    y: 30,
+    delay: 0.4,
+    duration: 1,
+    ease: "power3.out",
+    onComplete: () => gsap.set(".lux-btn", { clearProps: "all" })   // 👈 fixes glitch
+});
+
+
+    // Product Grid Animation
+    gsap.from(".product-card", {
+        scrollTrigger: {
+            trigger: ".product-grid",
+            start: "top 85%"
+        },
+        opacity: 0,
+        scale: 0.8,
+        y: 30,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+
+    // Back to Top Button
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = 'block';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    });
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Add to Cart
+    const cartIcon = document.querySelector('.cart-icon');
+    const cart = document.createElement('div');
+    cart.style.position = 'fixed';
+    cart.style.top = '70px';
+    cart.style.right = '-350px';
+    cart.style.width = '300px';
+    cart.style.background = '#111';
+    cart.style.padding = '15px';
+    cart.style.borderRadius = '10px';
+    cart.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+    cart.style.zIndex = '10000';
+    cart.style.transition = 'right 0.4s ease';
+    cart.innerHTML = `
+        <h4 style="color:#E5C07B; text-align:center;">🛒 Your Cart</h4>
+        <ul class="cart-list" style="list-style:none; padding:10px 0;"></ul>
+        <div style="text-align:center;">
+            <button class="checkout-btn" style="margin-top:10px;background:green;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Checkout</button>
+            <button class="close-cart" style="margin-top:10px;background:red;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Close</button>
+        </div>
+    `;
+    document.body.appendChild(cart);
+
+    cartIcon.addEventListener('click', () => {
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+    });
+    cart.querySelector('.close-cart').addEventListener('click', () => {
+        gsap.to(cart, { right: '-350px', duration: 0.4 });
+    });
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
+        const card = button.closest('.product-card');
+        const title = card.querySelector('h3').textContent;
+        const price = card.querySelector('.product-price').textContent;
+        const imageSrc = card.querySelector('img').src;
+
+        const cartList = cart.querySelector('.cart-list');
+
+        // ✅ Check if product already exists in cart
+        let existingItem = Array.from(cartList.children).find(li =>
+            li.querySelector('.cart-title')?.textContent === title
+        );
+
+        if (existingItem) {
+            // ✅ Increase quantity if item already exists
+            let qtyElem = existingItem.querySelector('.item-qty');
+            qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
+            updateLocalStorageCart();
+        } else {
+            // ✅ Create new cart item
+            const cartItem = document.createElement('li');
+            cartItem.style.display = 'flex';
+            cartItem.style.alignItems = 'center';
+            cartItem.style.marginBottom = '10px';
+            cartItem.innerHTML = `
+                <img src="${imageSrc}" style="width:50px;height:50px;object-fit:cover;margin-right:10px;border-radius:5px;">
+                <div>
+                    <p class="cart-title" style="margin:0;font-size:14px;color:#fff;">${title}</p>
+                    <p style="margin:0;font-size:12px;color:#aaa;">${price}</p>
+                    <p style="margin:0;font-size:12px;color:#E5C07B;">Qty: <span class="item-qty">1</span></p>
+                </div>
+                <button class="remove-btn" style="margin-left:auto;color:red;background:none;border:none;font-size:18px;cursor:pointer;">&#10005;</button>
+            `;
+            cartList.appendChild(cartItem);
+
+            gsap.from(cartItem, { opacity: 0, x: 50, duration: 0.5 });
+            updateLocalStorageCart();
+        }
+
+        // ✅ Always open cart when adding
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+
+        // ✅ Attach remove button logic with quantity check
+        cart.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.onclick = function() {
+                const item = btn.closest('li');
+                const qtyElem = item.querySelector('.item-qty');
+                const qty = parseInt(qtyElem.textContent);
+
+                if (qty > 1) {
+                    qtyElem.textContent = qty - 1;  // reduce qty
+                } else {
+                    item.remove();  // remove item if qty = 1
+                }
+                updateLocalStorageCart();
+            };
+
+        });
+    });
+});
+
+// ✅ Save cart to localStorage
+function updateLocalStorageCart() {
+    const cartItems = [];
+    document.querySelectorAll('.cart-list li').forEach(item => {
+        cartItems.push({
+            title: item.querySelector('.cart-title').textContent,
+            price: item.querySelector('p:nth-of-type(2)').textContent,
+            image: item.querySelector('img').src,
+            quantity: item.querySelector('.item-qty').textContent
+        });
+    });
+    localStorage.setItem('pradaCart', JSON.stringify(cartItems));
+}
+
+
+
+    // Checkout Button Action (for example, show alert)
+   cart.querySelector('.checkout-btn').addEventListener('click', () => {
+    window.location.href = 'checkout.html'; // 👈 opens checkout page instead of alert
+});
+
+   
+// ===================== FLOATING CART BUTTON =====================
+// const floatingCartBtn = document.createElement('div');
+// floatingCartBtn.id = 'floating-cart';
+// floatingCartBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i>';   // ✅ Correct icon
+// document.body.appendChild(floatingCartBtn);
+
+// // Style (matches luxury theme & fixes your issue)
+// const floatingStyle = floatingCartBtn.style;
+// floatingStyle.position = 'fixed';
+// floatingStyle.top = '80px';                                       // ✅ Slightly lower (looks better)
+// floatingStyle.right = '20px';
+// floatingStyle.backgroundColor = '#E5C07B';
+// floatingStyle.color = '#000';
+// floatingStyle.width = '55px';                                     // ✅ Fixed width
+// floatingStyle.height = '55px';                                    // ✅ Fixed height
+// floatingStyle.display = 'flex';
+// floatingStyle.alignItems = 'center';
+// floatingStyle.justifyContent = 'center';
+// floatingStyle.fontSize = '22px';                                  // ✅ Bigger icon
+// floatingStyle.borderRadius = '50%';
+// floatingStyle.cursor = 'pointer';
+// floatingStyle.boxShadow = '0 4px 10px rgba(0,0,0,0.5)';
+// floatingStyle.zIndex = '10000';
+// floatingStyle.transition = 'all 0.3s ease';
+// floatingStyle.display = 'none';
+
+// // Hover effect (luxury style)
+// floatingCartBtn.addEventListener('mouseover', () => {
+//     floatingCartBtn.style.transform = 'scale(1.1)';
+// });
+// floatingCartBtn.addEventListener('mouseout', () => {
+//     floatingCartBtn.style.transform = 'scale(1)';
+// });
+
+// // Show/Hide on scroll past #collection
+// window.addEventListener('scroll', () => {
+//     const collectionSection = document.querySelector('#collection');
+//     if (!collectionSection) return;
+//     const collectionTop = collectionSection.offsetTop;
+//     const scrollY = window.scrollY || window.pageYOffset;
+
+//     if (scrollY >= collectionTop) {
+//         floatingCartBtn.style.display = 'flex';                    // ✅ Use flex (not block)
+//     } else {
+//         floatingCartBtn.style.display = 'none';
+//     }
+// });
+
+// // Link floating cart button to open your cart
+// floatingCartBtn.addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+// // ALSO: Link navbar cart icon to same cart
+// document.querySelector('.cart-icon').addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+    </script>
+
+</body>
+</html>
+
+
+            <!-- You can continue with your remaining 29 products here in the same format -->

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BURBERRY | Luxury Redefined</title>
+
+    <!-- Fonts + Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Didot&family=Helvetica+Neue&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap + GSAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <style>
+        /* Luxury Global Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { scroll-behavior: smooth; }
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #000;
+            color: #F8F8F8;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Navbar */
+        .lux-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            border-bottom: 1px solid #E5C07B;
+        }
+        .lux-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+        .logo {
+            font-family: 'Didot', serif;
+            font-size: 2.5rem;
+            color: #E5C07B;
+            text-decoration: none;
+        }
+        .lux-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        .lux-menu li a {
+            color: #F8F8F8;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        .lux-menu li a:hover {
+            color: #E5C07B;
+        }
+        .lux-icons i {
+            font-size: 1.2rem;
+            color: #F8F8F8;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .lux-icons i:hover {
+            color: #E5C07B;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .hero-bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('/public/img17.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4);
+            z-index: -2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        .hero-content h1 {
+            font-family: 'Didot', serif;
+            font-size: 5rem;
+            color: #E5C07B;
+            margin-bottom: 20px;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        .lux-btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border: 2px solid #E5C07B;
+            color: #E5C07B;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+        .lux-btn:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .lux-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .lux-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1rem; }
+        }
+                /* ========================
+           Product Grid + Cards
+        ======================== */
+        #collection {
+            padding: 100px 0;
+            background-color: #000;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Didot', serif;
+            color: #E5C07B;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+        }
+
+        .product-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background-color: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .product-card-content h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .product-card-content p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #E5C07B;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .add-to-cart {
+            background-color: transparent;
+            color: #E5C07B;
+            border: 2px solid #E5C07B;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        .add-to-cart:hover {
+            background-color: #E5C07B;
+            color: #000;
+        }
+
+        @media(max-width: 768px){
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 20px;
+            }
+        }
+        .cart-button {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  background-color: #ff6f61;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.cart-button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cart-button.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#floating-cart i {
+    font-size: 20px;
+}
+#floating-cart:hover {
+    background-color: #C9A94A;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+    </style>
+</head>
+<body class="dark-mode">
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="lux-navbar">
+        <div class="lux-container">
+            <a href="#" class="logo">BURBERRY</a>
+            <ul class="lux-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="lux-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-user"></i>
+                <i class="fas fa-shopping-bag cart-icon"></i>
+            </div>
+           
+
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>BURBERRY</h1>
+            <p>Redefining Luxury</p>
+            <a href="#collection" class="lux-btn">Discover The Collection</a>
+        </div>
+        <div class="hero-bg-image"></div>
+    </section>
+
+    <!-- ===================== PRODUCT GRID START ===================== -->
+   <section id="collection">
+  <h2 class="section-title">Exclusive Collection</h2>
+  <div class="product-grid">
+
+    <!-- Product 1 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/FDCF5430-4410-4D84-BD86-5654C44361F6?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Small TB Bucket Bag">
+      <div class="product-card-content">
+        <h3>Small TB Bucket Bag</h3>
+        <p>Compact and stylish bucket bag featuring the iconic TB monogram.</p>
+        <div class="product-price">$670</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/E50F4793-0499-4F3D-8F20-142B4FC3C83A?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Cropped Check Denim Jacket">
+      <div class="product-card-content">
+        <h3>Cropped Check Denim Jacket</h3>
+        <p>Denim jacket with Burberry's signature check pattern and a modern cropped fit.</p>
+        <div class="product-price">$6,200</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/263AB1E5-D0E2-4E46-B3C4-8B0EB01A1D66?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Logo Wool Scarf">
+      <div class="product-card-content">
+        <h3>Logo Wool Scarf</h3>
+        <p>Soft wool scarf adorned with the Burberry logo, perfect for chilly days.</p>
+        <div class="product-price">$980</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/4BE169EA-A86B-4315-A07B-154D8573FC23?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check Compact Wallet">
+      <div class="product-card-content">
+        <h3>Check Compact Wallet</h3>
+        <p>Compact wallet featuring Burberry's classic check design.</p>
+        <div class="product-price">$120</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/8ED79BBD-E378-4494-8A40-A42E52936552?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Top Handle Note Bag">
+      <div class="product-card-content">
+        <h3>Top Handle Note Bag</h3>
+        <p>Elegant top handle bag with a structured silhouette and signature details.</p>
+        <div class="product-price">$450</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/A369CCF9-E5A6-4E24-A97A-9A4DAD0E9506?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check Cotton Sneakers">
+      <div class="product-card-content">
+        <h3>Check Cotton Sneakers</h3>
+        <p>Comfortable sneakers featuring Burberry's iconic check pattern.</p>
+        <div class="product-price">$6,500</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 7 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/A9FA8598-E43E-4758-924F-5918913CAC15?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Leather Slinky Legging Low Boots">
+      <div class="product-card-content">
+        <h3>Leather Slinky Legging Low Boots</h3>
+        <p>Sleek leather boots with a legging-inspired design for a modern look.</p>
+        <div class="product-price">$4,000</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 8 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/F6B24305-B7E8-459D-A017-0B3C94011548?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check Bifold Wallet">
+      <div class="product-card-content">
+        <h3>Check Bifold Wallet</h3>
+        <p>Classic bifold wallet featuring Burberry's signature check pattern.</p>
+        <div class="product-price">$2,300</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 9 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/57141692-5BD9-4E97-AFF4-5F0D4CA74245?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check Baby High Pumps">
+      <div class="product-card-content">
+        <h3>Check Baby High Pumps</h3>
+        <p>Stylish high pumps adorned with Burberry's iconic check design.</p>
+        <div class="product-price">$760</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 10 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/B25D1832-13AC-45F7-9F49-6C8399F8023D?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="EKD Wool Cashmere Sweater">
+      <div class="product-card-content">
+        <h3>EKD Wool Cashmere Sweater</h3>
+        <p>Luxurious sweater crafted from wool and cashmere, featuring the EKD motif.</p>
+        <div class="product-price">$1,360</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 11 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/8AAFDFAA-0869-4AD4-B647-4657D7428F51?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Medium Check Dog Collar">
+      <div class="product-card-content">
+        <h3>Medium Check Dog Collar</h3>
+        <p>Stylish dog collar featuring Burberry's classic check pattern.</p>
+        <div class="product-price">$7,200</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 12 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/25720696-07BE-44F5-BEB5-4D953B666E40?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Small Shield Twisted Hoop Earrings">
+      <div class="product-card-content">
+        <h3>Small Shield Twisted Hoop Earrings</h3>
+        <p>Elegant twisted hoop earrings with a shield design.</p>
+        <div class="product-price">$800</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+    <!-- Product 13 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/1D1E8621-2B0C-4371-9E05-A6FDAEB538EE?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Knight Arc Bag">
+      <div class="product-card-content">
+        <h3>Knight Arc Bag</h3>
+        <p>Chic and versatile bag with signature Burberry detailing.</p>
+        <div class="product-price">$730</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 14 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/392ABAF6-4C8B-4162-988C-8BD94DF7288B?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Burberry Eye Quad">
+      <div class="product-card-content">
+        <h3>Burberry Eye Quad</h3>
+        <p>Elegant eye palette offering four shades for effortless looks.</p>
+        <div class="product-price">$510</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 15 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/1663CA65-0C05-4CDD-959D-C55E40F6ED2B?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Long Castleford Trench Coat">
+      <div class="product-card-content">
+        <h3>Long Castleford Trench Coat</h3>
+        <p>Timeless trench coat crafted in a refined silhouette.</p>
+        <div class="product-price">$2,200</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 16 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/5C89AE89-6B9D-4C1C-A26C-277772E79AD6?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Leather Saddle High Boots">
+      <div class="product-card-content">
+        <h3>Leather Saddle High Boots</h3>
+        <p>Luxurious leather high boots with a sleek, modern shape.</p>
+        <div class="product-price">$4,100</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 17 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/A2A1BD38-5894-4DB0-B24A-C05506FD43DE?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Reversible Check B Buckle Belt">
+      <div class="product-card-content">
+        <h3>Reversible Check B Buckle Belt</h3>
+        <p>Signature reversible belt with Burberry’s B buckle closure.</p>
+        <div class="product-price">$720</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 18 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/8E608EAD-EDE3-4C3D-B919-3E4E04D39227?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="My Burberry Black Parfum">
+      <div class="product-card-content">
+        <h3>My Burberry Black Parfum</h3>
+        <p>Deep and sensual fragrance inspired by London rain.</p>
+        <div class="product-price">$800</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 19 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/D53FADAF-88DC-48EF-86D1-F97AB3B39487?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Mr. Burberry">
+      <div class="product-card-content">
+        <h3>Mr. Burberry</h3>
+        <p>Classic masculine fragrance combining warm cedarwood and fresh notes.</p>
+        <div class="product-price">$370</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 20 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/AA7CBEFF-C822-436A-B1FA-8BE8BB270482?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Leather Soho Loafers">
+      <div class="product-card-content">
+        <h3>Leather Soho Loafers</h3>
+        <p>Refined leather loafers that embody Burberry’s modern elegance.</p>
+        <div class="product-price">$750</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+    <!-- Product 21 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/08C4160C-11F9-49E7-A946-80B5A29FA0D2?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check Knit Neptune Sneakers">
+      <div class="product-card-content">
+        <h3>Check Knit Neptune Sneakers</h3>
+        <p>Contemporary sneaker design with Burberry check knit detailing.</p>
+        <div class="product-price">$5,100</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 22 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/C577B0B1-E711-4779-B36A-92C2B8095547?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Packet Earrings">
+      <div class="product-card-content">
+        <h3>Packet Earrings</h3>
+        <p>Delicate yet bold earrings with signature Burberry detailing.</p>
+        <div class="product-price">$890</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 23 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/5AB74B05-FB1D-4798-A29B-9337D75CD22E?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check EKD Cotton Blend Bucket Hat">
+      <div class="product-card-content">
+        <h3>Check EKD Cotton Blend Bucket Hat</h3>
+        <p>Street-style bucket hat featuring Burberry’s signature check pattern.</p>
+        <div class="product-price">$600</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 24 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/20DC2075-F321-45CD-8715-2368A61A5B2B?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check and Leather Heel Boots">
+      <div class="product-card-content">
+        <h3>Check and Leather Heel Boots</h3>
+        <p>Statement boots featuring a combination of leather and Burberry check.</p>
+        <div class="product-price">$6,100</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 25 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/20B681A6-D828-45F1-9B49-E2A803A4B014?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="EKD Hoop Earrings">
+      <div class="product-card-content">
+        <h3>EKD Hoop Earrings</h3>
+        <p>Contemporary hoop earrings with elegant Burberry EKD engraving.</p>
+        <div class="product-price">$360</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 26 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/BBEFA95F-1F25-40AF-8018-A739C063E5BF?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Reversible EKD Check Cashmere Scarf">
+      <div class="product-card-content">
+        <h3>Reversible EKD Check Cashmere Scarf</h3>
+        <p>Soft luxury scarf with the EKD and iconic Burberry check pattern.</p>
+        <div class="product-price">$780</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 27 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/6A586C54-D8E4-4F86-A81A-AC884AE53225?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="EKD Sphere Pearl Bracelet">
+      <div class="product-card-content">
+        <h3>EKD Sphere Pearl Bracelet</h3>
+        <p>Stunning pearl bracelet accented with Burberry EKD sphere charm.</p>
+        <div class="product-price">$1,600</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 28 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/79115747-F3E4-4154-A713-57D298AFDA82?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check Round Sunglasses">
+      <div class="product-card-content">
+        <h3>Check Round Sunglasses</h3>
+        <p>Modern round sunglasses featuring subtle Burberry check on the frame.</p>
+        <div class="product-price">$500</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+    <!-- Product 29 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/A2391930-035C-4E4B-901F-0F1C53F84277?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Check Backpack">
+      <div class="product-card-content">
+        <h3>Check Backpack</h3>
+        <p>Versatile backpack in iconic Burberry check with leather details.</p>
+        <div class="product-price">$750</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 30 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/517E457E-02B1-47E5-B531-9769A1A33F52?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Rose Monogram Ring">
+      <div class="product-card-content">
+        <h3>Rose Monogram Ring</h3>
+        <p>Elegant ring with Burberry rose monogram design in polished metal.</p>
+        <div class="product-price">$620</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 31 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/2E3187DD-0001-4858-A319-0E1CC61BECE9?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="EKD Sphere Pearl Stud Earrings">
+      <div class="product-card-content">
+        <h3>EKD Sphere Pearl Stud Earrings</h3>
+        <p>Chic pearl stud earrings with signature EKD detailing.</p>
+        <div class="product-price">$1,900</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Product 32 -->
+    <div class="product-card">
+      <img src="https://assets.burberry.com/is/image/Burberryltd/604C0908-8C7D-41C7-B928-E32DDA847E23?$BBY_V3_SL_1$&wid=1250&hei=1250" alt="Hollow Medallion Necklace">
+      <div class="product-card-content">
+        <h3>Hollow Medallion Necklace</h3>
+        <p>Statement necklace with a bold hollow medallion pendant.</p>
+        <div class="product-price">$2,200</div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+
+</div>
+</section>
+
+
+
+    <!-- ===================== BACK TO TOP BUTTON ===================== -->
+    <button class="back-to-top" id="backToTopBtn">&#8679;</button>
+
+    <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Animation
+    gsap.from(".hero-content h1", {
+        opacity: 0,
+        y: -40,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".hero-content p", {
+        opacity: 0,
+        y: 20,
+        delay: 0.2,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".lux-btn", {
+    opacity: 0,
+    y: 30,
+    delay: 0.4,
+    duration: 1,
+    ease: "power3.out",
+    onComplete: () => gsap.set(".lux-btn", { clearProps: "all" })   // 👈 fixes glitch
+});
+
+
+    // Product Grid Animation
+    gsap.from(".product-card", {
+        scrollTrigger: {
+            trigger: ".product-grid",
+            start: "top 85%"
+        },
+        opacity: 0,
+        scale: 0.8,
+        y: 30,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+
+    // Back to Top Button
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = 'block';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    });
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Add to Cart
+    const cartIcon = document.querySelector('.cart-icon');
+    const cart = document.createElement('div');
+    cart.style.position = 'fixed';
+    cart.style.top = '70px';
+    cart.style.right = '-350px';
+    cart.style.width = '300px';
+    cart.style.background = '#111';
+    cart.style.padding = '15px';
+    cart.style.borderRadius = '10px';
+    cart.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+    cart.style.zIndex = '10000';
+    cart.style.transition = 'right 0.4s ease';
+    cart.innerHTML = `
+        <h4 style="color:#E5C07B; text-align:center;">🛒 Your Cart</h4>
+        <ul class="cart-list" style="list-style:none; padding:10px 0;"></ul>
+        <div style="text-align:center;">
+            <button class="checkout-btn" style="margin-top:10px;background:green;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Checkout</button>
+            <button class="close-cart" style="margin-top:10px;background:red;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;">Close</button>
+        </div>
+    `;
+    document.body.appendChild(cart);
+
+    cartIcon.addEventListener('click', () => {
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+    });
+    cart.querySelector('.close-cart').addEventListener('click', () => {
+        gsap.to(cart, { right: '-350px', duration: 0.4 });
+    });
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
+        const card = button.closest('.product-card');
+        const title = card.querySelector('h3').textContent;
+        const price = card.querySelector('.product-price').textContent;
+        const imageSrc = card.querySelector('img').src;
+
+        const cartList = cart.querySelector('.cart-list');
+
+        // ✅ Check if product already exists in cart
+        let existingItem = Array.from(cartList.children).find(li =>
+            li.querySelector('.cart-title')?.textContent === title
+        );
+
+        if (existingItem) {
+            // ✅ Increase quantity if item already exists
+            let qtyElem = existingItem.querySelector('.item-qty');
+            qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
+            updateLocalStorageCart();
+        } else {
+            // ✅ Create new cart item
+            const cartItem = document.createElement('li');
+            cartItem.style.display = 'flex';
+            cartItem.style.alignItems = 'center';
+            cartItem.style.marginBottom = '10px';
+            cartItem.innerHTML = `
+                <img src="${imageSrc}" style="width:50px;height:50px;object-fit:cover;margin-right:10px;border-radius:5px;">
+                <div>
+                    <p class="cart-title" style="margin:0;font-size:14px;color:#fff;">${title}</p>
+                    <p style="margin:0;font-size:12px;color:#aaa;">${price}</p>
+                    <p style="margin:0;font-size:12px;color:#E5C07B;">Qty: <span class="item-qty">1</span></p>
+                </div>
+                <button class="remove-btn" style="margin-left:auto;color:red;background:none;border:none;font-size:18px;cursor:pointer;">&#10005;</button>
+            `;
+            cartList.appendChild(cartItem);
+
+            gsap.from(cartItem, { opacity: 0, x: 50, duration: 0.5 });
+            updateLocalStorageCart();
+        }
+
+        // ✅ Always open cart when adding
+        gsap.to(cart, { right: '30px', duration: 0.4 });
+
+        // ✅ Attach remove button logic with quantity check
+        cart.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.onclick = function() {
+                const item = btn.closest('li');
+                const qtyElem = item.querySelector('.item-qty');
+                const qty = parseInt(qtyElem.textContent);
+
+                if (qty > 1) {
+                    qtyElem.textContent = qty - 1;  // reduce qty
+                } else {
+                    item.remove();  // remove item if qty = 1
+                }
+                updateLocalStorageCart();
+            };
+
+        });
+    });
+});
+
+// ✅ Save cart to localStorage
+function updateLocalStorageCart() {
+    const cartItems = [];
+    document.querySelectorAll('.cart-list li').forEach(item => {
+        cartItems.push({
+            title: item.querySelector('.cart-title').textContent,
+            price: item.querySelector('p:nth-of-type(2)').textContent,
+            image: item.querySelector('img').src,
+            quantity: item.querySelector('.item-qty').textContent
+        });
+    });
+    localStorage.setItem('pradaCart', JSON.stringify(cartItems));
+}
+
+
+
+    // Checkout Button Action (for example, show alert)
+   cart.querySelector('.checkout-btn').addEventListener('click', () => {
+    window.location.href = 'checkout.html'; // 👈 opens checkout page instead of alert
+});
+
+   
+// ===================== FLOATING CART BUTTON =====================
+// const floatingCartBtn = document.createElement('div');
+// floatingCartBtn.id = 'floating-cart';
+// floatingCartBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i>';   // ✅ Correct icon
+// document.body.appendChild(floatingCartBtn);
+
+// // Style (matches luxury theme & fixes your issue)
+// const floatingStyle = floatingCartBtn.style;
+// floatingStyle.position = 'fixed';
+// floatingStyle.top = '80px';                                       // ✅ Slightly lower (looks better)
+// floatingStyle.right = '20px';
+// floatingStyle.backgroundColor = '#E5C07B';
+// floatingStyle.color = '#000';
+// floatingStyle.width = '55px';                                     // ✅ Fixed width
+// floatingStyle.height = '55px';                                    // ✅ Fixed height
+// floatingStyle.display = 'flex';
+// floatingStyle.alignItems = 'center';
+// floatingStyle.justifyContent = 'center';
+// floatingStyle.fontSize = '22px';                                  // ✅ Bigger icon
+// floatingStyle.borderRadius = '50%';
+// floatingStyle.cursor = 'pointer';
+// floatingStyle.boxShadow = '0 4px 10px rgba(0,0,0,0.5)';
+// floatingStyle.zIndex = '10000';
+// floatingStyle.transition = 'all 0.3s ease';
+// floatingStyle.display = 'none';
+
+// // Hover effect (luxury style)
+// floatingCartBtn.addEventListener('mouseover', () => {
+//     floatingCartBtn.style.transform = 'scale(1.1)';
+// });
+// floatingCartBtn.addEventListener('mouseout', () => {
+//     floatingCartBtn.style.transform = 'scale(1)';
+// });
+
+// // Show/Hide on scroll past #collection
+// window.addEventListener('scroll', () => {
+//     const collectionSection = document.querySelector('#collection');
+//     if (!collectionSection) return;
+//     const collectionTop = collectionSection.offsetTop;
+//     const scrollY = window.scrollY || window.pageYOffset;
+
+//     if (scrollY >= collectionTop) {
+//         floatingCartBtn.style.display = 'flex';                    // ✅ Use flex (not block)
+//     } else {
+//         floatingCartBtn.style.display = 'none';
+//     }
+// });
+
+// // Link floating cart button to open your cart
+// floatingCartBtn.addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+// // ALSO: Link navbar cart icon to same cart
+// document.querySelector('.cart-icon').addEventListener('click', () => {
+//     gsap.to(cart, { right: '30px', duration: 0.4 });
+// });
+
+    </script>
+
+</body>
+</html>
+
+
+            <!-- You can continue with your remaining 29 products here in the same format -->

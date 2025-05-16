@@ -1,0 +1,27 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE folders
+.vscode/
+.idea/
+
+# Optional test coverage
+coverage/
+
+# Optional: MongoDB dump files
+dump/
+
+# Optional: built static assets
+public/dist/
