@@ -1,9 +1,9 @@
+require("dotenv").config(); 
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
-require("dotenv").config(); // Load from .env
 
 // ========== LOCAL STRATEGY ==========
 passport.use(new LocalStrategy(
